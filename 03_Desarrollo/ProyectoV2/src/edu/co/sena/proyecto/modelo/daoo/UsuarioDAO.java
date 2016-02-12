@@ -5,10 +5,21 @@
  */
 package edu.co.sena.proyecto.modelo.daoo;
 
+import edu.co.sena.proyecto.modelo.dto.Usuario;
+import edu.co.sena.proyecto.modelo.dto.UsuarioPK;
+import java.util.List;
+
 /**
  *
  * @author Fores
  */
 public interface UsuarioDAO {
+   
+    
+    public  void insert(Usuario usuarioDTO);
+    
+    public  void update(Usuario usuarioDTO);
+    
+   
     
 }

@@ -9,6 +9,7 @@ import edu.co.sena.proyecto.modelo.daoo.PropietarioDAO;
 import edu.co.sena.proyecto.modelo.daoo.UsuarioDAO;
 import edu.co.sena.proyecto.modelo.dto.ResourceManager;
 import edu.co.sena.proyecto.modelo.dto.Usuario;
+import edu.co.sena.proyecto.modelo.dto.UsuarioPK;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,8 +21,6 @@ import java.util.List;
  * @author Fores
  */
 public class UsuarioDAOImp implements UsuarioDAO{
-    
-public class PropietarioDAOImp implements PropietarioDAO {
 
         private Connection conexion;
 
@@ -163,5 +162,10 @@ public class PropietarioDAOImp implements PropietarioDAO {
             }
 
         }
+
+
+   
+
+    
     }
-}
+
