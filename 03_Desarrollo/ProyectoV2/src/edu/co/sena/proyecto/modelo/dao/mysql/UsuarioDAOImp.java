@@ -7,12 +7,15 @@ package edu.co.sena.proyecto.modelo.dao.mysql;
 
 import edu.co.sena.proyecto.modelo.daoo.PropietarioDAO;
 import edu.co.sena.proyecto.modelo.daoo.UsuarioDAO;
+import edu.co.sena.proyecto.modelo.dto.RegistroEquipo;
+import edu.co.sena.proyecto.modelo.dto.RegistroEquipoPk;
 import edu.co.sena.proyecto.modelo.dto.ResourceManager;
 import edu.co.sena.proyecto.modelo.dto.Usuario;
 import edu.co.sena.proyecto.modelo.dto.UsuarioPK;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,152 +23,205 @@ import java.util.List;
  *
  * @author Fores
  */
-public class UsuarioDAOImp implements UsuarioDAO{
+public abstract class UsuarioDAOImp implements UsuarioDAO {
 
-        private Connection conexion;
+    private Connection conexion;
 
-        private final String SQL_SELECT = "select * from " + getTableName() + "";
+    private final String SQL_SELECT = "select * from " + getTableName() + "";
 
-        private final String SQL_INSERT = "INSERT INTO " + getTableName() + "\n"
-                + "CUENTA_TIPO_DOCUMENTO,\n"
-                + "CUENTA_NUEMRO_DOCUMENTO,\n"
-                + "PASSWORD\n"
-                + "VALUES\n"
-                + "(?,?,?)";
+    private final String SQL_INSERT = "INSERT INTO " + getTableName() + "\n"
+            + "CUENTA_TIPO_DOCUMENTO,\n"
+            + "CUENTA_NUEMRO_DOCUMENTO,\n"
+            + "PASSWORD\n"
+            + "VALUES\n"
+            + "(?,?,?)";
 
-        private final String SQL_UPDATE = "UPDATE " + getTableName() + "\n"
-                + "SET\n"
-                + "CUENTA_TIPO_DOCUMENTO = ?,\n"
-                + "WHERE CUENTA_NUEMRO_DOCUMENTO = ? AND PASSWORD = ?";
+    private final String SQL_UPDATE = "UPDATE " + getTableName() + "\n"
+            + "SET\n"
+            + "CUENTA_TIPO_DOCUMENTO = ?,\n"
+            + "WHERE CUENTA_NUEMRO_DOCUMENTO = ? "
+            + "AND PASSWORD = ?";
 
-        public String getTableName() {
-            return "acs.usuario";
-        }
+    private final String SQL_UPDATEPK = "UPDATE" + getTableName() + "\n"
+            + "SET\n"
+            + "CUENTA_TIPO_DOCUMENTO = ?,\n"
+            + "CUENTA_NUEMRO_DOCUMENTO = ? "
+            + "PASSWORD = ?"
+            + "WHERE CUENTA_TIPO_DOCUMENTO = ?"
+            + "CUENTA_NUEMRO_DOCUMENTO = ?"
+            + "PASSWORD = ?";
 
-        public List<Usuario> findAll() {
-            // declaracion de variables
-            final boolean estaConectado = (conexion != null);
-            Connection conn = null;
-            PreparedStatement statement = null;
-            ResultSet resultSet = null;
-            List<Usuario> Usuario = new ArrayList<>();
+    public String getTableName() {
+        return "acs.usuario";
+    }
 
-            try {
-                // obtener el la conexion 
+    
 
-                if (estaConectado) {
-                    conn = conexion;
-                } else {
-                    conn = ResourceManager.getConection();
-                }
+    @Override
+    public List<Usuario> findAll() {
+        // declaracion de variables
+        final boolean estaConectado = (conexion != null);
+        Connection conn = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<Usuario> Usuario = new ArrayList<>();
 
-                // construct the SQL statement
-                final String SQL = SQL_SELECT;
+        try {
+            // obtener el la conexion 
 
-                System.out.println("se ejecuto " + SQL);
-                statement = conn.prepareStatement(SQL);
-                resultSet = statement.executeQuery();
-
-                if (!resultSet.wasNull()) {
-                    while (resultSet.next()) {
-                        Usuario usuario1 = new Usuario();
-                        usuario1.setCuentaTipoDocumento(resultSet.getString(1));
-                        usuario1.setCuentaNumeroDocumento(resultSet.getString(2));
-                        usuario1.setPassword(resultSet.getString(3));
-
-                    }
-                }
-
-            } catch (Exception _e) {
-                System.out.println("error en el findAll");
-            } finally {
-                ResourceManager.close(resultSet);
-                ResourceManager.close(statement);
-                if (!estaConectado) {
-                    ResourceManager.close(conn);
-                }
+            if (estaConectado) {
+                conn = conexion;
+            } else {
+                conn = ResourceManager.getConection();
             }
-            return Usuario;
-        }
 
-        public void insert(Usuario usuarioDTO) {
-            // declaracion de variables
-            final boolean estaConectado = (conexion != null);
-            Connection conn = null;
-            PreparedStatement statement = null;
-            int resultSet;
+            // construct the SQL statement
+            final String SQL = SQL_SELECT;
 
-            try {
-                // obtener el la conexion 
+            System.out.println("se ejecuto " + SQL);
+            statement = conn.prepareStatement(SQL);
+            resultSet = statement.executeQuery();
 
-                if (estaConectado) {
-                    conn = conexion;
-                } else {
-                    conn = ResourceManager.getConection();
-                }
+            if (!resultSet.wasNull()) {
+                while (resultSet.next()) {
+                    Usuario usuario1 = new Usuario();
+                    usuario1.setCuentaTipoDocumento(resultSet.getString(1));
+                    usuario1.setCuentaNumeroDocumento(resultSet.getString(2));
+                    usuario1.setPassword(resultSet.getString(3));
 
-                // construct the SQL statement
-                final String SQL = SQL_INSERT;
-                int indice = 1;
-                System.out.println("se ejecuto " + SQL);
-                statement = conn.prepareStatement(SQL);
-                statement.setString(indice++, usuarioDTO.getCuentaTipoDocumento());
-                statement.setString(indice++, usuarioDTO.getCuentaNumeroDocumento());
-                statement.setString(indice++, usuarioDTO.getPassword());
-
-                resultSet = statement.executeUpdate();
-
-            } catch (Exception _e) {
-                System.out.println("error en el findAll");
-            } finally {
-                ResourceManager.close(statement);
-                if (!estaConectado) {
-                    ResourceManager.close(conn);
                 }
             }
 
+        } catch (Exception _e) {
+            System.out.println("error en el findAll");
+        } finally {
+            ResourceManager.close(resultSet);
+            ResourceManager.close(statement);
+            if (!estaConectado) {
+                ResourceManager.close(conn);
+            }
+        }
+        return Usuario;
+    }
+
+    public void insert(Usuario usuarioDTO) {
+        // declaracion de variables
+        final boolean estaConectado = (conexion != null);
+        Connection conn = null;
+        PreparedStatement statement = null;
+        int resultSet;
+
+        try {
+            // obtener el la conexion 
+
+            if (estaConectado) {
+                conn = conexion;
+            } else {
+                conn = ResourceManager.getConection();
+            }
+
+            // construct the SQL statement
+            final String SQL = SQL_INSERT;
+            int indice = 1;
+            System.out.println("se ejecuto " + SQL);
+            statement = conn.prepareStatement(SQL);
+            statement.setString(indice++, usuarioDTO.getCuentaTipoDocumento());
+            statement.setString(indice++, usuarioDTO.getCuentaNumeroDocumento());
+            statement.setString(indice++, usuarioDTO.getPassword());
+
+            resultSet = statement.executeUpdate();
+
+        } catch (Exception _e) {
+            System.out.println("error en el findAll");
+        } finally {
+            ResourceManager.close(statement);
+            if (!estaConectado) {
+                ResourceManager.close(conn);
+            }
         }
 
-        public void update(Usuario usuarioDTO) {
-            // declaracion de variables
-            final boolean estaConectado = (conexion != null);
-            Connection conn = null;
-            PreparedStatement statement = null;
-            int resultSet;
+    }
 
-            try {
-                // obtener el la conexion 
+    public void update(Usuario usuarioDTO) {
+        // declaracion de variables
+        final boolean estaConectado = (conexion != null);
+        Connection conn = null;
+        PreparedStatement statement = null;
+        int resultSet;
 
-                if (estaConectado) {
-                    conn = conexion;
-                } else {
-                    conn = ResourceManager.getConection();
-                }
+        try {
+            // obtener el la conexion 
 
-                // construct the SQL statement
-                final String SQL = SQL_UPDATE;
-                int indice = 1;
-                System.out.println("se ejecuto " + SQL);
-                statement = conn.prepareStatement(SQL);
-                statement.setString(indice++, usuarioDTO.getCuentaTipoDocumento());
-                statement.setString(indice++, usuarioDTO.getCuentaNumeroDocumento());
-                statement.setString(indice++, usuarioDTO.getPassword());
-                resultSet = statement.executeUpdate();
+            if (estaConectado) {
+                conn = conexion;
+            } else {
+                conn = ResourceManager.getConection();
+            }
 
-            } catch (Exception _e) {
-                System.out.println("error en el findAll");
-            } finally {
-                ResourceManager.close(statement);
-                if (!estaConectado) {
-                    ResourceManager.close(conn);
-                }
+            // construct the SQL statement
+            final String SQL = SQL_UPDATE;
+            int indice = 1;
+            System.out.println("se ejecuto " + SQL);
+            statement = conn.prepareStatement(SQL);
+            statement.setString(indice++, usuarioDTO.getCuentaTipoDocumento());
+            statement.setString(indice++, usuarioDTO.getCuentaNumeroDocumento());
+            statement.setString(indice++, usuarioDTO.getPassword());
+            resultSet = statement.executeUpdate();
+
+        } catch (Exception _e) {
+            System.out.println("error en el findAll");
+        } finally {
+            ResourceManager.close(statement);
+            if (!estaConectado) {
+                ResourceManager.close(conn);
+            }
+        }
+
+    }
+
+    public void updatePK(UsuarioPK nuevo, UsuarioPK viejo) throws SQLException {
+        Object conecion = null;
+
+        // declaracion de variables
+        final boolean estaConectado = (conecion != null);
+        Connection conn = null;
+        PreparedStatement statement = null;
+        int resultSet;
+
+        try {
+
+            if (estaConectado) {
+                conn = conexion;
+            } else {
+                conn = ResourceManager.getConection();
+            }
+
+            final String SQL = SQL_UPDATEPK;
+            int indice = 1;
+            System.out.println("se ejecuto " + SQL);
+            statement = conn.prepareStatement(SQL);
+
+            statement.setString(indice++, viejo.getCuentaTipoDocumento());
+            statement.setString(indice++, viejo.getCuentaNumeroDocumento());
+            statement.setString(indice++, viejo.getPassword());
+
+            statement.setString(indice++, nuevo.getCuentaTipoDocumento());
+            statement.setString(indice++, nuevo.getCuentaNumeroDocumento());
+            statement.setString(indice++, nuevo.getPassword());
+
+            resultSet = statement.executeUpdate();
+
+        } catch (Exception _e) {
+            System.out.println("error en el UpdatePK");
+        } finally {
+            ResourceManager.close(statement);
+            if (!estaConectado) {
+                ResourceManager.close(conn);
             }
 
         }
-
+    }
 
    
 
-    
-    }
-
+}
