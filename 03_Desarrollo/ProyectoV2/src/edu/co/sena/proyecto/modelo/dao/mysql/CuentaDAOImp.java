@@ -39,7 +39,8 @@ public class CuentaDAOImp implements CuentaDAO{
     private final String SQL_UPDATE = "UPDATE " + getTableName() + "\n"
             + "SET\n"
             + "TIPO_DOCUMENTO = ?,\n"
-            + "WHERE NUMERO_DOCUMENTO = ? AND PRIMER_NOMBRE = ?";
+            + "WHERE NUMERO_DOCUMENTO = ? AND PRIMER_NOMBRE = ? AND SEGUNDO_NOMBRE = ? AND PRIMER_APELLIDO = ?"
+            + "AND SEGUNDO_APELLIDO = ? AND CARGO = ? AND FOTO = ?";
 
     public String getTableName() {
         return "acs.cuenta";
