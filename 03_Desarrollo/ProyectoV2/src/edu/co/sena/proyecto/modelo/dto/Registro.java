@@ -11,9 +11,9 @@ package edu.co.sena.proyecto.modelo.dto;
  * @author Sebastian
  */
 public class Registro {
-     private int registro;
-     private String centaTipoDocumento;
-     private String centaNumeroDocumento;
+     private int idRegistro;
+     private String cuentaTipoDocumento;
+     private String cuentaNumeroDocumento;
      private java.sql.Date fechaEntrada;
      private java.sql.Time horaEntrada;
      private java.sql.Date fechaSalida;
@@ -22,28 +22,28 @@ public class Registro {
     public Registro() {
     }
 
-    public int getRegistro() {
-        return registro;
+   public int getIdRegistro() {
+        return idRegistro;
     }
 
-    public void setRegistro(int registro) {
-        this.registro = registro;
+    public void setIdRegistro(int idRegistro) {
+        this.idRegistro = idRegistro;
     }
 
-    public String getCentaTipoDocumento() {
-        return centaTipoDocumento;
+    public String getCuentaTipoDocumento() {
+        return cuentaTipoDocumento;
     }
 
-    public void setCentaTipoDocumento(String centaTipoDocumento) {
-        this.centaTipoDocumento = centaTipoDocumento;
+    public void setCuentaTipoDocumento(String cuentaTipoDocumento) {
+        this.cuentaTipoDocumento = cuentaTipoDocumento;
     }
 
-    public String getCentaNumeroDocumento() {
-        return centaNumeroDocumento;
+    public String getCuentaNumeroDocumento() {
+        return cuentaNumeroDocumento;
     }
 
-    public void setCentaNumeroDocumento(String centaNumeroDocumento) {
-        this.centaNumeroDocumento = centaNumeroDocumento;
+    public void setCuentaNumeroDocumento(String cuentaNumeroDocumento) {
+        this.cuentaNumeroDocumento = cuentaNumeroDocumento;
     }
 
     public java.sql.Date getFechaEntrada() {
@@ -77,6 +77,8 @@ public class Registro {
     public void setHoraSalida(java.sql.Time horaSalida) {
         this.horaSalida = horaSalida;
     }
+
+    
      
      
 
