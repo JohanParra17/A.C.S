@@ -5,6 +5,8 @@
  */
 package edu.co.sena.proyecto.modelo.dto;
 
+import java.sql.Blob;
+
 /**
  *
  * @author Sebestian
@@ -17,7 +19,7 @@ public class Cuenta {
      private String primerApellido;
      private String segundoApellido;
      private String cargo;
-     private Byte[] foto;
+     private Blob foto;
 
     public Cuenta() {
     }
@@ -78,11 +80,11 @@ public class Cuenta {
         this.cargo = cargo;
     }
 
-    public Byte[] getFoto() {
+    public Blob getFoto() {
         return foto;
     }
 
-    public void setFoto(Byte[] foto) {
+    public void setFoto(Blob foto) {
         this.foto = foto;
     }
      
