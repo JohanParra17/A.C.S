@@ -5,6 +5,7 @@
  */
 package edu.co.sena.proyecto.modelo.dao.mysql;
 
+import edu.co.sena.proyecto.modelo.daoo.RegistroEquipoDAO;
 import edu.co.sena.proyecto.modelo.dto.RegistroEquipo;
 import edu.co.sena.proyecto.modelo.dto.RegistroEquipoPk;
 import edu.co.sena.proyecto.modelo.dto.ResourceManager;
@@ -19,7 +20,7 @@ import java.util.List;
  *
  * @author Sena-901540
  */
-public class RegistroEquipoDAOImp {
+public class RegistroEquipoDAOImp implements RegistroEquipoDAO {
 
     private Connection conexion;
 
@@ -198,7 +199,9 @@ public class RegistroEquipoDAOImp {
 
     }
 
-    public void updatePK(RegistroEquipoPk nuevo, RegistroEquipoPk viejo) throws SQLException {
+    
+   
+    public void updatePK(RegistroEquipoPk nuevo, RegistroEquipoPk viejo)  {
         Object conecion = null;
 
         // declaracion de variables

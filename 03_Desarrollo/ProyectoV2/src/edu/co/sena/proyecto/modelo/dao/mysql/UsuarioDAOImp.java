@@ -7,8 +7,6 @@ package edu.co.sena.proyecto.modelo.dao.mysql;
 
 import edu.co.sena.proyecto.modelo.daoo.PropietarioDAO;
 import edu.co.sena.proyecto.modelo.daoo.UsuarioDAO;
-import edu.co.sena.proyecto.modelo.dto.RegistroEquipo;
-import edu.co.sena.proyecto.modelo.dto.RegistroEquipoPk;
 import edu.co.sena.proyecto.modelo.dto.ResourceManager;
 import edu.co.sena.proyecto.modelo.dto.Usuario;
 import edu.co.sena.proyecto.modelo.dto.UsuarioPK;
@@ -23,7 +21,7 @@ import java.util.List;
  *
  * @author Fores
  */
-public abstract class UsuarioDAOImp implements UsuarioDAO {
+public class UsuarioDAOImp implements UsuarioDAO {
 
     private Connection conexion;
 
@@ -54,8 +52,6 @@ public abstract class UsuarioDAOImp implements UsuarioDAO {
     public String getTableName() {
         return "acs.usuario";
     }
-
-    
 
     @Override
     public List<Usuario> findAll() {
@@ -104,6 +100,7 @@ public abstract class UsuarioDAOImp implements UsuarioDAO {
         return Usuario;
     }
 
+    @Override
     public void insert(Usuario usuarioDTO) {
         // declaracion de variables
         final boolean estaConectado = (conexion != null);
@@ -139,9 +136,9 @@ public abstract class UsuarioDAOImp implements UsuarioDAO {
                 ResourceManager.close(conn);
             }
         }
-
     }
 
+    @Override
     public void update(Usuario usuarioDTO) {
         // declaracion de variables
         final boolean estaConectado = (conexion != null);
@@ -176,10 +173,10 @@ public abstract class UsuarioDAOImp implements UsuarioDAO {
                 ResourceManager.close(conn);
             }
         }
-
     }
 
-    public void updatePK(UsuarioPK nuevo, UsuarioPK viejo) throws SQLException {
+    @Override
+    public void updatePK(UsuarioPK nuevo, UsuarioPK viejo) {
         Object conecion = null;
 
         // declaracion de variables
@@ -221,7 +218,5 @@ public abstract class UsuarioDAOImp implements UsuarioDAO {
 
         }
     }
-
-   
 
 }
