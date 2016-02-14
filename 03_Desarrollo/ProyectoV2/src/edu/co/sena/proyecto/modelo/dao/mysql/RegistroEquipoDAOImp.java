@@ -6,10 +6,12 @@
 package edu.co.sena.proyecto.modelo.dao.mysql;
 
 import edu.co.sena.proyecto.modelo.dto.RegistroEquipo;
+import edu.co.sena.proyecto.modelo.dto.RegistroEquipoPk;
 import edu.co.sena.proyecto.modelo.dto.ResourceManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +20,11 @@ import java.util.List;
  * @author Sena-901540
  */
 public class RegistroEquipoDAOImp {
+
     private Connection conexion;
-    
+
     private final String SQL_SELECT = "select * from " + getTableName() + "";
-    
+
     private final String SQL_INSERT = "INSERT INTO " + getTableName() + "\n"
             + "REGISTRO_ID_REGISTRO,\n"
             + "PROPIETARIO_EQUIPO_CODIGO_BARRAS,\n"
@@ -32,13 +35,27 @@ public class RegistroEquipoDAOImp {
             + "FECHA_SALIDA\n"
             + "HORA_SALIDA\n"
             + "VALUES\n"
-            + "(?,?,?)";
+            + "(?,?,?,?,?,?,?,?)";
 
     private final String SQL_UPDATE = "UPDATE " + getTableName() + "\n"
             + "SET\n"
             + "REGISTRO_ID_REGISTRO = ?,\n"
-            + "WHERE PROPIETARIO_EQUIPO_CODIGO_BARRAS = ? AND PROPIETARIO_CUENTA_TIPO_DOCUMENTO = ? AND PROPIETARIO_CUENTA_NUMERO_DOCUMENTO = ?"
-            + "AND FECHA_ENTRADA = ? AND HORA_ENTRADA = ? AND FECHA_SALIDA = ? ? AND HORA_SALIDA = ?";
+            + "AND PROPIETARIO_EQUIPO_CODIGO_BARRAS = ? "
+            + "AND PROPIETARIO_CUENTA_TIPO_DOCUMENTO = ? "
+            + "AND PROPIETARIO_CUENTA_NUMERO_DOCUMENTO = ?"
+            + "AND FECHA_ENTRADA = ? "
+            + "AND HORA_ENTRADA = ? "
+            + "AND FECHA_SALIDA = ? ? "
+            + "AND HORA_SALIDA = ?";
+
+    private final String SQL_UPDATEPK = "UPDATE" + getTableName() + "\n"
+            + "SET\n"
+            + "REGISTRO_ID_REGISTRO = ?"
+            + "PROPIETARIO_EQUIPO_CODIGO_BARRAS = ? "
+            + "PROPIETARIO_CUENTA_NUMERO_DOCUMENTO = ?"
+            + "WHERE REGISTRO_ID_REGISTRO = ?"
+            + "AND PROPIETARIO_EQUIPO_CODIGO_BARRAS = ? "
+            + "AND PROPIETARIO_CUENTA_NUMERO_DOCUMENTO = ?";
 
     public String getTableName() {
         return "acs.registro";
@@ -79,9 +96,7 @@ public class RegistroEquipoDAOImp {
                     registroe.setHoraEntrada(resultSet.getTime(6));
                     registroe.setFechaSalida(resultSet.getDate(7));
                     registroe.setHoraSalida(resultSet.getTime(8));
-                    
-                    
-                    
+
                 }
             }
 
@@ -126,9 +141,6 @@ public class RegistroEquipoDAOImp {
             statement.setTime(indice++, registroEquipoDTO.getHoraEntrada());
             statement.setDate(indice++, registroEquipoDTO.getFechaSalida());
             statement.setTime(indice++, registroEquipoDTO.getHoraSalida());
-       
-          
-          
 
             resultSet = statement.executeUpdate();
 
@@ -172,7 +184,7 @@ public class RegistroEquipoDAOImp {
             statement.setTime(indice++, registroEquipoDTO.getHoraEntrada());
             statement.setDate(indice++, registroEquipoDTO.getFechaSalida());
             statement.setTime(indice++, registroEquipoDTO.getHoraSalida());
-       
+
             resultSet = statement.executeUpdate();
 
         } catch (Exception _e) {
@@ -184,5 +196,50 @@ public class RegistroEquipoDAOImp {
             }
         }
 
-    } 
+    }
+
+    public void updatePK(RegistroEquipoPk nuevo, RegistroEquipoPk viejo) throws SQLException {
+        Object conecion = null;
+
+        // declaracion de variables
+        final boolean estaConectado = (conecion != null);
+        Connection conn = null;
+        PreparedStatement statement = null;
+        int resultSet;
+
+        try {
+
+            if (estaConectado) {
+                conn = conexion;
+            } else {
+                conn = ResourceManager.getConection();
+            }
+
+            final String SQL = SQL_UPDATEPK;
+            int indice = 1;
+            System.out.println("se ejecuto " + SQL);
+            statement = conn.prepareStatement(SQL);
+
+            statement.setInt(indice++, viejo.getRegistroIdRegistro());
+            statement.setString(indice++, viejo.getPropietarioEquipoCodigoBarras());
+            statement.setString(indice++, viejo.getPropietarioCuentaTipoDocumento());
+            statement.setString(indice++, viejo.getPropietarioCuentaNumeroDocumento());
+
+            statement.setInt(indice++, nuevo.getRegistroIdRegistro());
+            statement.setString(indice++, nuevo.getPropietarioEquipoCodigoBarras());
+            statement.setString(indice++, nuevo.getPropietarioCuentaTipoDocumento());
+            statement.setString(indice++, nuevo.getPropietarioCuentaNumeroDocumento());
+
+            resultSet = statement.executeUpdate();
+
+        } catch (Exception _e) {
+            System.out.println("error en el UpdatePK");
+        } finally {
+            ResourceManager.close(statement);
+            if (!estaConectado) {
+                ResourceManager.close(conn);
+            }
+
+        }
+    }
 }
