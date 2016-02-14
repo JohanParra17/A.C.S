@@ -51,7 +51,7 @@ public class RegistroEquipoPk {
     @Override
     public String toString() {
         StringBuffer ret = new StringBuffer();
-        ret.append("edu.co.sena.ejemplodao.dato.registroEquipoPk");
+        ret.append("edu.co.sena.ejemplodao.dto.registroEquipoPk");
         ret.append("registroIdRegistro"+ registroIdRegistro);
         ret.append("propietarioEquipoCodigoBarras"+ propietarioEquipoCodigoBarras);
         ret.append("propietarioCuentaTipoDocumento"+ propietarioCuentaTipoDocumento);
