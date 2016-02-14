@@ -6,10 +6,13 @@
 package edu.co.sena.proyecto.modelo.dao.mysql;
 
 import edu.co.sena.proyecto.modelo.dto.Registro;
+import edu.co.sena.proyecto.modelo.dto.RegistroEquipoPk;
+import edu.co.sena.proyecto.modelo.dto.RegistroPk;
 import edu.co.sena.proyecto.modelo.dto.ResourceManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,20 +27,33 @@ public class RegistroDAOImp {
     
     private final String SQL_INSERT = "INSERT INTO " + getTableName() + "\n"
             + "ID_REGISTRO,\n"
-            + " CUENTA_TIPO_DOCUMENTO,\n"
+            + "CUENTA_TIPO_DOCUMENTO,\n"
             + "CUENTA_NUMERO_DOCUMENTO\n"
             + "FECHA_ENTRADA\n"
             + "HORA_ENTRADA\n"
             + "FECHA_SALIDA\n"
             + "HORA_SALIDA\n"
             + "VALUES\n"
-            + "(?,?,?)";
+            + "(?,?,?,?,?,?,?)";
 
     private final String SQL_UPDATE = "UPDATE " + getTableName() + "\n"
             + "SET\n"
             + "ID_REGISTRO = ?,\n"
-            + "WHERE CUENTA_TIPO_DOCUMENTO = ? AND CUENTA_NUMERO_DOCUMENTO = ? AND FECHA_ENTRADA = ?"
-            + "AND HORA_ENTRADA = ? AND FECHA_SALIDA = ? AND HORA_SALIDA = ?";
+            + "WHERE CUENTA_TIPO_DOCUMENTO = ? "
+            + "AND CUENTA_NUMERO_DOCUMENTO = ? "
+            + "AND FECHA_ENTRADA = ?"
+            + "AND HORA_ENTRADA = ? "
+            + "AND FECHA_SALIDA = ? "
+            + "AND HORA_SALIDA = ?";
+    
+    private final String SQL_UPDATEPK = "UPTADE" +getTableName() + "\n"
+            + "SET\n"
+            + "ID_REGISTRO = ?,\n"
+            + "CUENTA_TIPO_DOCUMENTO = ?"
+            + "CUENTA_NUMERO_DOCUMENTO = ?"
+            + "WHERE ID_REGISTRO = ?"
+            + "CUENTA_TIPO_DOCUMENTO = ? "
+            + "AND CUENTA_NUMERO_DOCUMENTO = ? ";
 
     public String getTableName() {
         return "acs.registro";
@@ -70,9 +86,9 @@ public class RegistroDAOImp {
             if (!resultSet.wasNull()) {
                 while (resultSet.next()) {
                     Registro registro = new Registro();
-                    registro.setRegistro(resultSet.getInt(1));
-                    registro.setCentaTipoDocumento(resultSet.getString(2));
-                    registro.setCentaNumeroDocumento(resultSet.getString(3));
+                    registro.setIdRegistro(resultSet.getInt(1));
+                    registro.setCuentaTipoDocumento(resultSet.getString(2));
+                    registro.setCuentaNumeroDocumento(resultSet.getString(3));
                     registro.setFechaEntrada(resultSet.getDate(4));
                     registro.setHoraEntrada(resultSet.getTime(5));
                     registro.setFechaSalida(resultSet.getDate(6));
@@ -116,9 +132,9 @@ public class RegistroDAOImp {
             int indice = 1;
             System.out.println("se ejecuto " + SQL);
             statement = conn.prepareStatement(SQL);
-            statement.setInt(indice++, registroDTO.getRegistro());
-            statement.setString(indice++, registroDTO.getCentaTipoDocumento());
-            statement.setString(indice++, registroDTO.getCentaNumeroDocumento());
+            statement.setInt(indice++, registroDTO.getIdRegistro());
+            statement.setString(indice++, registroDTO.getCuentaTipoDocumento());
+            statement.setString(indice++, registroDTO.getCuentaNumeroDocumento());
             statement.setDate(indice++, registroDTO.getFechaEntrada());
             statement.setTime(indice++, registroDTO.getHoraEntrada());
             statement.setDate(indice++, registroDTO.getFechaSalida());
@@ -161,9 +177,9 @@ public class RegistroDAOImp {
             int indice = 1;
             System.out.println("se ejecuto " + SQL);
             statement = conn.prepareStatement(SQL);
-            statement.setInt(indice++, registroDTO.getRegistro());
-            statement.setString(indice++, registroDTO.getCentaTipoDocumento());
-            statement.setString(indice++, registroDTO.getCentaNumeroDocumento());
+            statement.setInt(indice++, registroDTO.getIdRegistro());
+            statement.setString(indice++, registroDTO.getCuentaTipoDocumento());
+            statement.setString(indice++, registroDTO.getCuentaNumeroDocumento());
             statement.setDate(indice++, registroDTO.getFechaEntrada());
             statement.setTime(indice++, registroDTO.getHoraEntrada());
             statement.setDate(indice++, registroDTO.getFechaSalida());
@@ -181,4 +197,47 @@ public class RegistroDAOImp {
         }
 
     } 
+    public void updatePK(RegistroPk nuevo, RegistroPk viejo) throws SQLException {
+        Object conecion = null;
+
+        // declaracion de variables
+        final boolean estaConectado = (conecion != null);
+        Connection conn = null;
+        PreparedStatement statement = null;
+        int resultSet;
+
+        try {
+
+            if (estaConectado) {
+                conn = conexion;
+            } else {
+                conn = ResourceManager.getConection();
+            }
+
+            final String SQL = SQL_UPDATEPK;
+            int indice = 1;
+            System.out.println("se ejecuto " + SQL);
+            statement = conn.prepareStatement(SQL);
+
+            statement.setInt(indice++, viejo.getIdRegistro());
+            statement.setString(indice++, viejo.getCuentaTipoDocumento());
+            statement.setString(indice++, viejo.getCuentaNumeroDocumento());
+
+            statement.setInt(indice++, nuevo.getIdRegistro());
+            statement.setString(indice++, nuevo.getCuentaTipoDocumento());
+            statement.setString(indice++, nuevo.getCuentaNumeroDocumento());
+
+            resultSet = statement.executeUpdate();
+
+        } catch (Exception _e) {
+            System.out.println("error en el UpdatePK");
+        } finally {
+            ResourceManager.close(statement);
+            if (!estaConectado) {
+                ResourceManager.close(conn);
+            }
+
+        }
+    }
+    
 }
