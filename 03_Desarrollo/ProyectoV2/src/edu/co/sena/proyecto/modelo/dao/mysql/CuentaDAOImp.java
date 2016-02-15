@@ -25,7 +25,7 @@ public class CuentaDAOImp implements CuentaDAO{
     
     private final String SQL_SELECT = "select * from " + getTableName() + "";
     
-    private final String SQL_INSERT = "INSERT INTO " + getTableName() + "\n"
+    private final String SQL_INSERT = "INSERT  " + getTableName() + "\n"
             + "TIPO_DOCUMENTO,\n"
             + "NUMERO_DOCUMENTO,\n"
             + "PRIMER_NOMBRE\n"
@@ -38,17 +38,17 @@ public class CuentaDAOImp implements CuentaDAO{
 
     private final String SQL_UPDATE = "UPDATE " + getTableName() + "\n"
             + "SET\n"
-            + "TIPO_DOCUMENTO = ?,\n"
-            + "WHERE NUMERO_DOCUMENTO = ? "
-            + "AND PRIMER_NOMBRE = ? "
-            + "AND SEGUNDO_NOMBRE = ? "
-            + "AND PRIMER_APELLIDO = ?"
-            + "AND SEGUNDO_APELLIDO = ? "
-            + "AND CARGO = ? "
-            + "AND FOTO = ?";
+            + "TIPO_DOCUMENTO \n"
+            + "WHERE NUMERO_DOCUMENTO \n"
+            + "AND PRIMER_NOMBRE \n"
+            + "AND SEGUNDO_NOMBRE \n"
+            + "AND PRIMER_APELLIDO \n"
+            + "AND SEGUNDO_APELLIDO \n"
+            + "AND CARGO \n "
+            + "AND FOTO ";
     
     
-    private final String SQL_UPDATEPK = "UPDATE " + getTableName() + "\n"
+    private final String SQL_UPDATEPK = "UPDATEPK " + getTableName() + "\n"
             + "SET\n "
             + "TIPO_DOCUMENTO = ?,\n"
             + "NUMERO_DOCUMENTO = ? "
@@ -66,6 +66,16 @@ public class CuentaDAOImp implements CuentaDAO{
             + "AND SEGUNDO_APELLIDO = ? "
             + "AND CARGO = ? "
             + "AND FOTO = ?";
+    
+    private final  String SQL_DELETE = "DELETE" +getTableName() + "\n"
+            +" WHERE TIPO_DOCUMENTO = ?,\n"
+            + "NUMERO_DOCUMENTO = ? "
+            + "PRIMER_NOMBRE = ? "
+            + "SEGUNDO_NOMBRE = ? "
+            + "PRIMER_APELLIDO = ?"
+            + "SEGUNDO_APELLIDO = ? "
+            + "CARGO = ? "
+            + "FOTO = ?;";
 
     public String getTableName() {
         return "acs.cuenta";
@@ -260,6 +270,48 @@ public class CuentaDAOImp implements CuentaDAO{
                 ResourceManager.close(conn);
             }
 
+        }
+    }
+
+    @Override
+    public void delete(Cuenta cuentaDTO) {
+        final boolean estaConectado = (conexion != null);
+        Connection conn = null;
+        PreparedStatement statement = null;
+        int resultSet;
+
+        try {
+            // obtener el la conexion 
+
+            if (estaConectado) {
+                conn = conexion;
+            } else {
+                conn = ResourceManager.getConection();
+            }
+
+            // construct the SQL statement
+            final String SQL = SQL_DELETE;
+            int indice = 1;
+            System.out.println("se ejecuto " + SQL);
+            statement = conn.prepareStatement(SQL);
+            statement.setString(indice++, cuentaDTO.getTipoDocumento());
+            statement.setString(indice++, cuentaDTO.getNumeroDocumento());
+            statement.setString(indice++, cuentaDTO.getPrimerNombre());
+            statement.setString(indice++, cuentaDTO.getSegundoNombre());
+            statement.setString(indice++, cuentaDTO.getPrimerApellido());
+            statement.setString(indice++, cuentaDTO.getSegundoApellido());
+            statement.setString(indice++, cuentaDTO.getCargo());
+            statement.setBlob(indice++, cuentaDTO.getFoto());
+
+            resultSet = statement.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println("error en el Delete " + e.getMessage());
+        } finally {
+            ResourceManager.close(statement);
+            if (!estaConectado) {
+                ResourceManager.close(conn);
+            }
         }
     }
     }

@@ -21,5 +21,8 @@ public interface CuentaDAO {
     public abstract void insert(Cuenta cuentaDTO);
 
     public abstract void update(Cuenta cuentaDTO);
+    
     public void updatePK( CuentaPk nuevo, CuentaPk viejo);
+    
+    public void delete(Cuenta cuentaDTO);
 }

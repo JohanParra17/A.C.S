@@ -6,6 +6,7 @@
 
 import edu.co.sena.proyecto.modelo.dao.mysql.CuentaDAOImp;
 import edu.co.sena.proyecto.modelo.dto.Cuenta;
+import edu.co.sena.proyecto.modelo.dto.CuentaPk;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -85,4 +86,39 @@ public class CuentaDAOImpTest {
          CuentaDAOImp instance = new CuentaDAOImp();
          instance.update(cuentaDTO);
     }
+    
+        @Test
+    public void testUpdatePk () {
+        
+            System.out.println("updatePK");
+            CuentaPk nuevo = new CuentaPk();
+            CuentaPk viejo = new CuentaPk();
+            CuentaDAOImp instance = new CuentaDAOImp();
+            
+            nuevo.setTipoDocumento("C.C");
+            nuevo.setNumeroDocumento("1020854947");
+            viejo.setTipoDocumento("C.E");
+            viejo.setNumeroDocumento("A1548248");
+            instance.updatePK(nuevo, viejo);
+        
+    }
+    
+     @Test
+    public void testDelete () {
+         System.out.println("DELETE");
+         Cuenta cuentaDTO = new Cuenta();
+         CuentaDAOImp instance = new CuentaDAOImp();
+         cuentaDTO.setTipoDocumento("C.C");
+         cuentaDTO.setNumeroDocumento("1020824947");
+         cuentaDTO.setPrimerNombre("Johan");
+         cuentaDTO.setSegundoNombre("Sebastian");
+         cuentaDTO.setPrimerApellido("Parra");
+         cuentaDTO.setSegundoApellido("Rojas");
+         cuentaDTO.setCargo("Aprendiz");
+         cuentaDTO.setFoto(null);
+         
+         instance.delete(cuentaDTO);
+    }
+    
+    
 }
