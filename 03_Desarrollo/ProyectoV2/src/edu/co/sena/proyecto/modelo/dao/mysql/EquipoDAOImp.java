@@ -47,7 +47,10 @@ public class EquipoDAOImp implements EquipoDAO{
             + "AND MARCA = ? "
             + "AND DESCRIPCION = ?";
     
-    
+    private final  String SQL_DELETE = "DELETE" +getTableName() + "\n"
+            +" WHERE CODIGO_BARRAS = ?,\n"
+            + "MARCA = ? "
+            + "DESCRIPCION = ?;";
 
     public String getTableName() {
         return "acs.equipo";
@@ -221,6 +224,44 @@ public class EquipoDAOImp implements EquipoDAO{
 
         }
     }
+
+    public void delete(Equipo equipoDTO) {
+       final boolean estaConectado = (conexion != null);
+        Connection conn = null;
+        PreparedStatement statement = null;
+        int resultSet;
+
+        try {
+            // obtener el la conexion 
+
+            if (estaConectado) {
+                conn = conexion;
+            } else {
+                conn = ResourceManager.getConection();
+            }
+
+            // construct the SQL statement
+            final String SQL = SQL_DELETE;
+            int indice = 1;
+            System.out.println("se ejecuto " + SQL);
+            statement = conn.prepareStatement(SQL);
+            statement.setString(indice++, equipoDTO.getCodigoBarras());
+            statement.setString(indice++, equipoDTO.getMarca());
+            statement.setString(indice++, equipoDTO.getDescripcion());
+            resultSet = statement.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println("error en el Delete " + e.getMessage());
+        } finally {
+            ResourceManager.close(statement);
+            if (!estaConectado) {
+                ResourceManager.close(conn);
+            }
+        }
     }
+    }
+
+    
+    
 
 
