@@ -5,10 +5,8 @@
  */
 package edu.co.sena.proyecto.modelo.daoo;
 
-import edu.co.sena.proyecto.modelo.dto.RegistroEquipo;
-import edu.co.sena.proyecto.modelo.dto.RegistroEquipoPk;
+
 import edu.co.sena.proyecto.modelo.dto.Usuario;
-import edu.co.sena.proyecto.modelo.dto.UsuarioPK;
 import java.util.List;
 
 /**
@@ -18,10 +16,10 @@ import java.util.List;
 public interface UsuarioDAO {
    public List<Usuario> findAll();
 
-    public void insert(RegistroEquipo registroEquipoDTO);
+    public void insert(Usuario UsuarioDTO);
 
-    public void update(RegistroEquipo registroEquipoDTO);
+    public void update(Usuario UsuarioDTO);
 
-    public void updatePK(RegistroEquipoPk nuevo, RegistroEquipoPk viejo);
+    
     
 }

@@ -9,7 +9,6 @@ import edu.co.sena.proyecto.modelo.daoo.PropietarioDAO;
 import edu.co.sena.proyecto.modelo.daoo.UsuarioDAO;
 import edu.co.sena.proyecto.modelo.dto.ResourceManager;
 import edu.co.sena.proyecto.modelo.dto.Usuario;
-import edu.co.sena.proyecto.modelo.dto.UsuarioPK;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,14 +39,6 @@ public class UsuarioDAOImp implements UsuarioDAO {
             + "WHERE CUENTA_NUEMRO_DOCUMENTO = ? "
             + "AND PASSWORD = ?";
 
-    private final String SQL_UPDATEPK = "UPDATE" + getTableName() + "\n"
-            + "SET\n"
-            + "CUENTA_TIPO_DOCUMENTO = ?,\n"
-            + "CUENTA_NUEMRO_DOCUMENTO = ? "
-            + "PASSWORD = ?"
-            + "WHERE CUENTA_TIPO_DOCUMENTO = ?"
-            + "CUENTA_NUEMRO_DOCUMENTO = ?"
-            + "PASSWORD = ?";
 
     public String getTableName() {
         return "acs.usuario";
@@ -100,7 +91,6 @@ public class UsuarioDAOImp implements UsuarioDAO {
         return Usuario;
     }
 
-    @Override
     public void insert(Usuario usuarioDTO) {
         // declaracion de variables
         final boolean estaConectado = (conexion != null);
@@ -136,9 +126,9 @@ public class UsuarioDAOImp implements UsuarioDAO {
                 ResourceManager.close(conn);
             }
         }
+        
     }
 
-    @Override
     public void update(Usuario usuarioDTO) {
         // declaracion de variables
         final boolean estaConectado = (conexion != null);
@@ -175,48 +165,9 @@ public class UsuarioDAOImp implements UsuarioDAO {
         }
     }
 
-    @Override
-    public void updatePK(UsuarioPK nuevo, UsuarioPK viejo) {
-        Object conecion = null;
+    
 
-        // declaracion de variables
-        final boolean estaConectado = (conecion != null);
-        Connection conn = null;
-        PreparedStatement statement = null;
-        int resultSet;
+   
 
-        try {
-
-            if (estaConectado) {
-                conn = conexion;
-            } else {
-                conn = ResourceManager.getConection();
-            }
-
-            final String SQL = SQL_UPDATEPK;
-            int indice = 1;
-            System.out.println("se ejecuto " + SQL);
-            statement = conn.prepareStatement(SQL);
-
-            statement.setString(indice++, viejo.getCuentaTipoDocumento());
-            statement.setString(indice++, viejo.getCuentaNumeroDocumento());
-            statement.setString(indice++, viejo.getPassword());
-
-            statement.setString(indice++, nuevo.getCuentaTipoDocumento());
-            statement.setString(indice++, nuevo.getCuentaNumeroDocumento());
-            statement.setString(indice++, nuevo.getPassword());
-
-            resultSet = statement.executeUpdate();
-
-        } catch (Exception _e) {
-            System.out.println("error en el UpdatePK");
-        } finally {
-            ResourceManager.close(statement);
-            if (!estaConectado) {
-                ResourceManager.close(conn);
-            }
-
-        }
-    }
 
 }
