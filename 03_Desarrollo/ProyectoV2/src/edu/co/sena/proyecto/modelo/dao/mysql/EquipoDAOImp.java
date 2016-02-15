@@ -8,7 +8,6 @@ package edu.co.sena.proyecto.modelo.dao.mysql;
 import edu.co.sena.proyecto.modelo.daoo.EquipoDAO;
 import edu.co.sena.proyecto.modelo.daoo.PropietarioDAO;
 import edu.co.sena.proyecto.modelo.dto.Equipo;
-import edu.co.sena.proyecto.modelo.dto.Propietario;
 import edu.co.sena.proyecto.modelo.dto.ResourceManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,7 +21,6 @@ import java.util.List;
  */
 public class EquipoDAOImp implements EquipoDAO{
     
-public class PropietarioDAOImp implements PropietarioDAO{
     private Connection conexion;
     
     private final String SQL_SELECT = "select * from " + getTableName() + "";
@@ -167,4 +165,4 @@ public class PropietarioDAOImp implements PropietarioDAO{
 
     }
 }
-}
+

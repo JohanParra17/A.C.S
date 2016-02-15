@@ -8,6 +8,7 @@ package edu.co.sena.proyecto.modelo.dao.mysql;
 import edu.co.sena.proyecto.modelo.daoo.PropietarioDAO;
 import edu.co.sena.proyecto.modelo.dto.Cuenta;
 import edu.co.sena.proyecto.modelo.dto.Propietario;
+import edu.co.sena.proyecto.modelo.dto.PropietarioPk;
 import edu.co.sena.proyecto.modelo.dto.ResourceManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,7 +35,17 @@ public class PropietarioDAOImp implements PropietarioDAO{
     private final String SQL_UPDATE = "UPDATE " + getTableName() + "\n"
             + "SET\n"
             + "EQUIPO_CODIGO_BARRAS = ?,\n"
-            + "WHERE CUENTA_TIPO_DOCUMENTO = ? AND CUENTA_NUMERO_DOCUMENTO = ?";
+            + "WHERE CUENTA_TIPO_DOCUMENTO = ? "
+            + "AND CUENTA_NUMERO_DOCUMENTO = ?";
+
+    private final String SQL_UPDATEPK = "UPDATE " + getTableName() + "\n"
+            + "SET\n"
+            + "EQUIPO_CODIGO_BARRAS = ?,\n"
+            + "CUENTA_TIPO_DOCUMENTO = ? "
+            + "CUENTA_NUMERO_DOCUMENTO = ?"
+            + "WHERE EQUIPO_BARRAS = ?"
+            + "AND CUENTA_TIPO_DOCUMENTO = ?"
+            + "AND CUENTA_NUMERO_DOCUMENTO = ?";
 
     public String getTableName() {
         return "acs.propietario";
@@ -163,5 +174,50 @@ public class PropietarioDAOImp implements PropietarioDAO{
         }
 
     }
-}
+
+    @Override
+    public void updatePK(PropietarioPk nuevo, PropietarioPk viejo) {
+        Object conecion = null;
+
+        // declaracion de variables
+        final boolean estaConectado = (conecion != null);
+        Connection conn = null;
+        PreparedStatement statement = null;
+        int resultSet;
+
+        try {
+
+            if (estaConectado) {
+                conn = conexion;
+            } else {
+                conn = ResourceManager.getConection();
+            }
+
+            final String SQL = SQL_UPDATEPK;
+            int indice = 1;
+            System.out.println("se ejecuto " + SQL);
+            statement = conn.prepareStatement(SQL);
+
+            statement.setString(indice++, viejo.getEquipoCodigoBarras());
+            statement.setString(indice++, viejo.getUsuarioTipoDocumento());
+            statement.setString(indice++, viejo.getUsuarioTipoDocumento());
+
+            statement.setString(indice++, nuevo.getEquipoCodigoBarras());
+            statement.setString(indice++, nuevo.getUsuarioTipoDocumento());
+            statement.setString(indice++, nuevo.getUsuarioTipoDocumento());
+
+            resultSet = statement.executeUpdate();
+
+        } catch (Exception _e) {
+            System.out.println("error en el UpdatePK");
+        } finally {
+            ResourceManager.close(statement);
+            if (!estaConectado) {
+                ResourceManager.close(conn);
+            }
+
+        }
+    }
+    }
+
            
