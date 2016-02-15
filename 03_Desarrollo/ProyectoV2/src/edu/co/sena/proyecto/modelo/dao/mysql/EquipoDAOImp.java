@@ -6,8 +6,8 @@
 package edu.co.sena.proyecto.modelo.dao.mysql;
 
 import edu.co.sena.proyecto.modelo.daoo.EquipoDAO;
-import edu.co.sena.proyecto.modelo.daoo.PropietarioDAO;
 import edu.co.sena.proyecto.modelo.dto.Equipo;
+import edu.co.sena.proyecto.modelo.dto.EquipoPk;
 import edu.co.sena.proyecto.modelo.dto.ResourceManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,7 +35,19 @@ public class EquipoDAOImp implements EquipoDAO{
     private final String SQL_UPDATE = "UPDATE " + getTableName() + "\n"
             + "SET\n"
             + "CODIGO_BARRAS = ?,\n"
-            + "WHERE MARCA = ? AND DESCRIPCION = ?";
+            + "WHERE MARCA = ? "
+            + "AND DESCRIPCION = ?";
+
+    private final String SQL_UPDATEPK = "UPDATE " + getTableName() + "\n"
+            + "SET\n"
+            + "CODIGO_BARRAS = ?,\n"
+            + "MARCA = ?"
+            + "DESCRIPCION = ?"
+            + "WHERE CODIGO_BARRAS = ?"
+            + "AND MARCA = ? "
+            + "AND DESCRIPCION = ?";
+    
+    
 
     public String getTableName() {
         return "acs.equipo";
@@ -164,5 +176,51 @@ public class EquipoDAOImp implements EquipoDAO{
         }
 
     }
-}
+
+    @Override
+    public void updatePK(EquipoPk nuevo, EquipoPk viejo) {
+       
+        Object conecion = null;
+
+        // declaracion de variables
+        final boolean estaConectado = (conecion != null);
+        Connection conn = null;
+        PreparedStatement statement = null;
+        int resultSet;
+
+        try {
+
+            if (estaConectado) {
+                conn = conexion;
+            } else {
+                conn = ResourceManager.getConection();
+            }
+
+            final String SQL = SQL_UPDATEPK;
+            int indice = 1;
+            System.out.println("se ejecuto " + SQL);
+            statement = conn.prepareStatement(SQL);
+
+            statement.setString(indice++, viejo.getCodigoBarras());
+            statement.setString(indice++, viejo.getMarca());
+            statement.setString(indice++, viejo.getDescripcion());
+
+            statement.setString(indice++, nuevo.getCodigoBarras());
+            statement.setString(indice++, nuevo.getMarca());
+            statement.setString(indice++, nuevo.getDescripcion());
+            
+            resultSet = statement.executeUpdate();
+
+        } catch (Exception _e) {
+            System.out.println("error en el UpdatePK");
+        } finally {
+            ResourceManager.close(statement);
+            if (!estaConectado) {
+                ResourceManager.close(conn);
+            }
+
+        }
+    }
+    }
+
 

@@ -7,6 +7,7 @@ package edu.co.sena.proyecto.modelo.dao.mysql;
 
 import edu.co.sena.proyecto.modelo.daoo.CuentaDAO;
 import edu.co.sena.proyecto.modelo.dto.Cuenta;
+import edu.co.sena.proyecto.modelo.dto.CuentaPk;
 import edu.co.sena.proyecto.modelo.dto.ResourceManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,13 +35,38 @@ public class CuentaDAOImp implements CuentaDAO{
             + "CARGO\n"
             + "FOTO\n"
             + "VALUES\n"
-            + "(?,?,?)";
+            + "(?,?,?,?,?,?,?,?)";
 
     private final String SQL_UPDATE = "UPDATE " + getTableName() + "\n"
             + "SET\n"
             + "TIPO_DOCUMENTO = ?,\n"
-            + "WHERE NUMERO_DOCUMENTO = ? AND PRIMER_NOMBRE = ? AND SEGUNDO_NOMBRE = ? AND PRIMER_APELLIDO = ?"
-            + "AND SEGUNDO_APELLIDO = ? AND CARGO = ? AND FOTO = ?";
+            + "WHERE NUMERO_DOCUMENTO = ? "
+            + "AND PRIMER_NOMBRE = ? "
+            + "AND SEGUNDO_NOMBRE = ? "
+            + "AND PRIMER_APELLIDO = ?"
+            + "AND SEGUNDO_APELLIDO = ? "
+            + "AND CARGO = ? "
+            + "AND FOTO = ?";
+    
+    
+    private final String SQL_UPDATEPK = "UPDATE " + getTableName() + "\n"
+            + "SET\n "
+            + "TIPO_DOCUMENTO = ?,\n"
+            + "NUMERO_DOCUMENTO = ? "
+            + "PRIMER_NOMBRE = ? "
+            + "SEGUNDO_NOMBRE = ? "
+            + "PRIMER_APELLIDO = ?"
+            + "SEGUNDO_APELLIDO = ? "
+            + "CARGO = ? "
+            + "FOTO = ?"
+            + "WHERE TIPO_DOCUMENTO = ?,\n"
+            + "WHERE NUMERO_DOCUMENTO = ? "
+            + "AND PRIMER_NOMBRE = ? "
+            + "AND SEGUNDO_NOMBRE = ? "
+            + "AND PRIMER_APELLIDO = ?"
+            + "AND SEGUNDO_APELLIDO = ? "
+            + "AND CARGO = ? "
+            + "AND FOTO = ?";
 
     public String getTableName() {
         return "acs.cuenta";
@@ -183,4 +209,59 @@ public class CuentaDAOImp implements CuentaDAO{
         }
 
     }
-}
+
+    @Override
+    public void updatePK(CuentaPk nuevo, CuentaPk viejo) {
+        Object conecion = null;
+
+        // declaracion de variables
+        final boolean estaConectado = (conecion != null);
+        Connection conn = null;
+        PreparedStatement statement = null;
+        int resultSet;
+
+        try {
+
+            if (estaConectado) {
+                conn = conexion;
+            } else {
+                conn = ResourceManager.getConection();
+            }
+
+            final String SQL = SQL_UPDATEPK;
+            int indice = 1;
+            System.out.println("se ejecuto " + SQL);
+            statement = conn.prepareStatement(SQL);
+
+            statement.setString(indice++, viejo.getTipoDocumento());
+            statement.setString(indice++, viejo.getNumeroDocumento());
+            statement.setString(indice++, viejo.getPrimerNombre());
+            statement.setString(indice++, viejo.getSegundoNombre());
+            statement.setString(indice++, viejo.getPrimerNombre());
+            statement.setString(indice++, viejo.getSegundoApellido());
+            statement.setString(indice++, viejo.getCargo());
+            statement.setBlob(indice++, viejo.getFoto());
+
+            statement.setString(indice++, nuevo.getTipoDocumento());
+            statement.setString(indice++, nuevo.getNumeroDocumento());
+            statement.setString(indice++, nuevo.getPrimerNombre());
+            statement.setString(indice++, nuevo.getSegundoNombre());
+            statement.setString(indice++, nuevo.getPrimerApellido());
+            statement.setString(indice++, nuevo.getSegundoApellido());
+            statement.setString(indice++, nuevo.getCargo());
+            statement.setBlob(indice++, nuevo.getFoto());
+
+            resultSet = statement.executeUpdate();
+
+        } catch (Exception _e) {
+            System.out.println("error en el UpdatePK");
+        } finally {
+            ResourceManager.close(statement);
+            if (!estaConectado) {
+                ResourceManager.close(conn);
+            }
+
+        }
+    }
+    }
+

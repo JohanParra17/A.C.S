@@ -6,6 +6,7 @@
 package edu.co.sena.proyecto.modelo.daoo;
 
 import edu.co.sena.proyecto.modelo.dto.Cuenta;
+import edu.co.sena.proyecto.modelo.dto.CuentaPk;
 import java.util.List;
 
 /**
@@ -20,4 +21,5 @@ public interface CuentaDAO {
     public abstract void insert(Cuenta cuentaDTO);
 
     public abstract void update(Cuenta cuentaDTO);
+    public void updatePK( CuentaPk nuevo, CuentaPk viejo);
 }
