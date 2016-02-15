@@ -38,8 +38,9 @@ public class UsuarioDAOImp implements UsuarioDAO {
             + "CUENTA_TIPO_DOCUMENTO = ?,\n"
             + "WHERE CUENTA_NUEMRO_DOCUMENTO = ? "
             + "AND PASSWORD = ?";
-
-
+public final String SQL_DELETE = "DELETE" + getTableName() + 
+        
+    "PASSWORD\n";
     public String getTableName() {
         return "acs.usuario";
     }
@@ -165,9 +166,46 @@ public class UsuarioDAOImp implements UsuarioDAO {
         }
     }
 
+    @Override
+    public void delete(Usuario usuarioDTO) {
+    final boolean estaConectado = (conexion != null);
+        Connection conn = null;
+        PreparedStatement statement = null;
+        int resultSet;
+    try {
+            // obtener el la conexion 
+
+            if (estaConectado) {
+                conn = conexion;
+            } else {
+                conn = ResourceManager.getConection();
+            }
+
+            // construct the SQL statement
+            final String SQL = SQL_DELETE;
+            int indice = 1;
+            System.out.println("se ejecuto " + SQL);
+            statement = conn.prepareStatement(SQL);
+            statement.setString(indice++, usuarioDTO.getCuentaTipoDocumento());
+            statement.setString(indice++, usuarioDTO.getCuentaNumeroDocumento());
+            statement.setString(indice++, usuarioDTO.getPassword());
+            
+
+            resultSet = statement.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println("error en el Delete " + e.getMessage());
+        } finally {
+            ResourceManager.close(statement);
+            if (!estaConectado) {
+                ResourceManager.close(conn);
+            }
+        }
+    }
+    }
+
     
 
    
 
 
-}

@@ -21,4 +21,6 @@ public interface PropietarioDAO {
     public void update(Propietario propietarioDTO);
 
     public void updatePK(PropietarioPk nuevo, PropietarioPk viejo);
+    
+    public void delete(Propietario propietarioDTO);
 }

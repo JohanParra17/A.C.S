@@ -20,6 +20,7 @@ public interface UsuarioDAO {
 
     public void update(Usuario UsuarioDTO);
 
+    public void delete(Usuario propietarioDTO);
     
     
 }
