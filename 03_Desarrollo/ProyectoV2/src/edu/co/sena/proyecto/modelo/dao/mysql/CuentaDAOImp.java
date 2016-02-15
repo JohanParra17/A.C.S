@@ -30,12 +30,11 @@ public class CuentaDAOImp implements CuentaDAO{
             + "NUMERO_DOCUMENTO,\n"
             + "PRIMER_NOMBRE\n"
             + "SEGUNDO_NOMBRE\n"
-            + " PRIMER_APELLIDO\n"
+            + "PRIMER_APELLIDO\n"
             + "SEGUNDO_APELLIDO\n"
             + "CARGO\n"
             + "FOTO\n"
-            + "VALUES\n"
-            + "(?,?,?,?,?,?,?,?)";
+            + "VALUES";
 
     private final String SQL_UPDATE = "UPDATE " + getTableName() + "\n"
             + "SET\n"
@@ -158,7 +157,7 @@ public class CuentaDAOImp implements CuentaDAO{
             resultSet = statement.executeUpdate();
 
         } catch (Exception _e) {
-            System.out.println("error en el findAll");
+            System.out.println("error en el insert");
         } finally {
             ResourceManager.close(statement);
             if (!estaConectado) {

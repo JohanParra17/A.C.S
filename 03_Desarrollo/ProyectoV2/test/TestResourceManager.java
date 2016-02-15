@@ -65,7 +65,7 @@ public class TestResourceManager {
         Connection conexion = ResourceManager.getConection();
         ResultSet rs = null;
         PreparedStatement sentencia = null;
-        String sqlPrepared = "SELECT * FROM acs.cuenta where TIPO_DOCUMENTO = ?;";
+        String sqlPrepared = "SELECT * FROM acs.usuario where TIPO_DOCUMENTO = ?;";
         sentencia = conexion.prepareStatement(sqlPrepared);
         sentencia.setInt(1, 1);
         rs = sentencia.executeQuery();
