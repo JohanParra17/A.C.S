@@ -6,7 +6,6 @@
 package edu.co.sena.proyecto.modelo.dao.mysql;
 
 import edu.co.sena.proyecto.modelo.daoo.PropietarioDAO;
-import edu.co.sena.proyecto.modelo.dto.Cuenta;
 import edu.co.sena.proyecto.modelo.dto.Propietario;
 import edu.co.sena.proyecto.modelo.dto.PropietarioPk;
 import edu.co.sena.proyecto.modelo.dto.ResourceManager;
@@ -60,7 +59,7 @@ public class PropietarioDAOImp implements PropietarioDAO{
         Connection conn = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        List<Propietario> propietario = new ArrayList<>();
+        List<Propietario> propietarios = new ArrayList<>();
 
         try {
             // obtener el la conexion 
@@ -80,12 +79,12 @@ public class PropietarioDAOImp implements PropietarioDAO{
 
             if (!resultSet.wasNull()) {
                 while (resultSet.next()) {
-                    Propietario propietario1 = new Propietario();
-                    propietario1.setEquipoCodigoBarras(resultSet.getString(1));
-                    propietario1.setUsuarioNumeroDocumento(resultSet.getString(2));
-                    propietario1.setUsuarioTipoDocumento(resultSet.getString(3));
+                    Propietario propietario = new Propietario();
+                    propietario.setEquipoCodigoBarras(resultSet.getString(1));
+                    propietario.setUsuarioNumeroDocumento(resultSet.getString(2));
+                    propietario.setUsuarioTipoDocumento(resultSet.getString(3));
                     
-                   
+                   propietarios.add(propietario);
                 }
             }
 
@@ -98,7 +97,7 @@ public class PropietarioDAOImp implements PropietarioDAO{
                 ResourceManager.close(conn);
             }
         }
-        return propietario;
+        return propietarios;
     }
 
     public void insert(Propietario propietarioDTO) {

@@ -56,13 +56,14 @@ public class EquipoDAOImp implements EquipoDAO{
         return "acs.equipo";
     }
 
+    @Override
     public List<Equipo> findAll() {
         // declaracion de variables
         final boolean estaConectado = (conexion != null);
         Connection conn = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        List<Equipo> Equipo = new ArrayList<>();
+        List<Equipo> equipos = new ArrayList<>();
 
         try {
             // obtener el la conexion 
@@ -82,12 +83,12 @@ public class EquipoDAOImp implements EquipoDAO{
 
             if (!resultSet.wasNull()) {
                 while (resultSet.next()) {
-                    Equipo equipo1 = new Equipo();
-                    equipo1.setCodigoBarras(resultSet.getString(1));
-                    equipo1.setMarca(resultSet.getString(2));
-                    equipo1.setDescripcion(resultSet.getString(3));
+                    Equipo equipo = new Equipo();
+                    equipo.setCodigoBarras(resultSet.getString(1));
+                    equipo.setMarca(resultSet.getString(2));
+                    equipo.setDescripcion(resultSet.getString(3));
                     
-                   
+                   equipos.add(equipo);
                 }
             }
 
@@ -100,7 +101,7 @@ public class EquipoDAOImp implements EquipoDAO{
                 ResourceManager.close(conn);
             }
         }
-        return Equipo;
+        return equipos;
     }
 
     public void insert(Equipo equipoDTO) {

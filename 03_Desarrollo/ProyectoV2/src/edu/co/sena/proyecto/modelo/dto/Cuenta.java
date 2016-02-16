@@ -18,6 +18,7 @@ public class Cuenta {
      private String segundoNombre;
      private String primerApellido;
      private String segundoApellido;
+     private Boolean estado;
      private String cargo;
      private Blob foto;
 
@@ -71,6 +72,8 @@ public class Cuenta {
     public void setSegundoApellido(String segundoApellido) {
         this.segundoApellido = segundoApellido;
     }
+    
+    
 
     public String getCargo() {
         return cargo;
@@ -86,6 +89,14 @@ public class Cuenta {
 
     public void setFoto(Blob foto) {
         this.foto = foto;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
      
      

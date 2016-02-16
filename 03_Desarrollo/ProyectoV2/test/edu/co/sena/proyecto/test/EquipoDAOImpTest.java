@@ -51,8 +51,9 @@ public class EquipoDAOImpTest {
         System.out.println("FindAll");
         EquipoDAOImp instance = new EquipoDAOImp();
         List<Equipo> equipo1 = instance.findAll();
-        for (Equipo equipo11 : equipo1) {
+        for (Equipo equipo : equipo1) {
             System.out.println(equipo1.toString());
+            
         }
 
     }

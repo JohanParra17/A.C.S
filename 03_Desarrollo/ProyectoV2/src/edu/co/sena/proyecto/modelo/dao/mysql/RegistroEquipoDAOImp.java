@@ -31,10 +31,8 @@ public class RegistroEquipoDAOImp implements RegistroEquipoDAO {
             + "PROPIETARIO_EQUIPO_CODIGO_BARRAS,\n"
             + "PROPIETARIO_CUENTA_TIPO_DOCUMENTO\n"
             + "PROPIETARIO_CUENTA_NUMERO_DOCUMENTO\n"
-            + "FECHA_ENTRADA\n"
-            + "HORA_ENTRADA\n"
-            + "FECHA_SALIDA\n"
-            + "HORA_SALIDA\n"
+            + "fechaEntrada_horaEntrada\n"
+            + "fechaSalida_horaSalida\n"
             + "VALUES\n"
             + "(?,?,?,?,?,?,?,?)";
 
@@ -44,10 +42,8 @@ public class RegistroEquipoDAOImp implements RegistroEquipoDAO {
             + "AND PROPIETARIO_EQUIPO_CODIGO_BARRAS = ? "
             + "AND PROPIETARIO_CUENTA_TIPO_DOCUMENTO = ? "
             + "AND PROPIETARIO_CUENTA_NUMERO_DOCUMENTO = ?"
-            + "AND FECHA_ENTRADA = ? "
-            + "AND HORA_ENTRADA = ? "
-            + "AND FECHA_SALIDA = ? ? "
-            + "AND HORA_SALIDA = ?";
+            + "AND fechaEntrada_horaEntrada = ? "
+            + "AND fechaSalida_horaSalida = ? ";
 
     private final String SQL_UPDATEPK = "UPDATE" + getTableName() + "\n"
             + "SET\n"
@@ -57,9 +53,12 @@ public class RegistroEquipoDAOImp implements RegistroEquipoDAO {
             + "WHERE REGISTRO_ID_REGISTRO = ?"
             + "AND PROPIETARIO_EQUIPO_CODIGO_BARRAS = ? "
             + "AND PROPIETARIO_CUENTA_NUMERO_DOCUMENTO = ?";
+            
+    private final String SQL_DELETE = "DELETE" + getTableName()
+            + "PROPIETARIO_CUENTA_NUMERO_DOCUMENTO = ?";
 
     public String getTableName() {
-        return "acs.registro";
+        return "acs.registroequipo";
     }
 
     public List<RegistroEquipo> findAll() {
@@ -68,7 +67,7 @@ public class RegistroEquipoDAOImp implements RegistroEquipoDAO {
         Connection conn = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        List<RegistroEquipo> cuentas = new ArrayList<>();
+        List<RegistroEquipo> registroequipos = new ArrayList<>();
 
         try {
             // obtener el la conexion 
@@ -93,10 +92,9 @@ public class RegistroEquipoDAOImp implements RegistroEquipoDAO {
                     registroe.setPropietarioEquipoCodigoBarras(resultSet.getString(2));
                     registroe.setPropietarioCuentaTipoDocumento(resultSet.getString(3));
                     registroe.setPropietarioCuentaNumeroDocumento(resultSet.getString(4));
-                    registroe.setFechaEntrada(resultSet.getDate(5));
-                    registroe.setHoraEntrada(resultSet.getTime(6));
-                    registroe.setFechaSalida(resultSet.getDate(7));
-                    registroe.setHoraSalida(resultSet.getTime(8));
+                    registroe.setFechaEntrada_horaEntrada(resultSet.getTimestamp(5));
+                    registroe.setFechaSalida_horaSalida(resultSet.getTimestamp(6));
+                    
 
                 }
             }
@@ -110,9 +108,10 @@ public class RegistroEquipoDAOImp implements RegistroEquipoDAO {
                 ResourceManager.close(conn);
             }
         }
-        return cuentas;
+        return registroequipos;
     }
 
+    @Override
     public void insert(RegistroEquipo registroEquipoDTO) {
         // declaracion de variables
         final boolean estaConectado = (conexion != null);
@@ -138,10 +137,9 @@ public class RegistroEquipoDAOImp implements RegistroEquipoDAO {
             statement.setString(indice++, registroEquipoDTO.getPropietarioEquipoCodigoBarras());
             statement.setString(indice++, registroEquipoDTO.getPropietarioCuentaTipoDocumento());
             statement.setString(indice++, registroEquipoDTO.getPropietarioCuentaNumeroDocumento());
-            statement.setDate(indice++, registroEquipoDTO.getFechaEntrada());
-            statement.setTime(indice++, registroEquipoDTO.getHoraEntrada());
-            statement.setDate(indice++, registroEquipoDTO.getFechaSalida());
-            statement.setTime(indice++, registroEquipoDTO.getHoraSalida());
+            statement.setTimestamp(indice++, registroEquipoDTO.getFechaEntrada_horaEntrada());
+            statement.setTimestamp(indice++, registroEquipoDTO.getFechaSalida_horaSalida());
+            
 
             resultSet = statement.executeUpdate();
 
@@ -181,10 +179,9 @@ public class RegistroEquipoDAOImp implements RegistroEquipoDAO {
             statement.setString(indice++, registroEquipoDTO.getPropietarioEquipoCodigoBarras());
             statement.setString(indice++, registroEquipoDTO.getPropietarioCuentaTipoDocumento());
             statement.setString(indice++, registroEquipoDTO.getPropietarioCuentaNumeroDocumento());
-            statement.setDate(indice++, registroEquipoDTO.getFechaEntrada());
-            statement.setTime(indice++, registroEquipoDTO.getHoraEntrada());
-            statement.setDate(indice++, registroEquipoDTO.getFechaSalida());
-            statement.setTime(indice++, registroEquipoDTO.getHoraSalida());
+            statement.setTimestamp(indice++, registroEquipoDTO.getFechaEntrada_horaEntrada());
+            statement.setTimestamp(indice++, registroEquipoDTO.getFechaSalida_horaSalida());
+            
 
             resultSet = statement.executeUpdate();
 
@@ -243,6 +240,42 @@ public class RegistroEquipoDAOImp implements RegistroEquipoDAO {
                 ResourceManager.close(conn);
             }
 
+        }
+    }
+    public void delete(RegistroEquipo registroequipoDTO) {
+        final boolean estaConectado = (conexion != null);
+        Connection conn = null;
+        PreparedStatement statement = null;
+        int resultSet;
+        try {
+            // obtener el la conexion 
+
+            if (estaConectado) {
+                conn = conexion;
+            } else {
+                conn = ResourceManager.getConection();
+            }
+
+            // construct the SQL statement
+            final String SQL = SQL_DELETE;
+            int indice = 1;
+            System.out.println("se ejecuto " + SQL);
+            statement = conn.prepareStatement(SQL);
+            statement.setString(indice++, registroequipoDTO.getPropietarioCuentaNumeroDocumento());
+            statement.setString(indice++, registroequipoDTO.getPropietarioCuentaTipoDocumento());
+            statement.setString(indice++, registroequipoDTO.getPropietarioEquipoCodigoBarras());
+            statement.setTimestamp(indice++, registroequipoDTO.getFechaEntrada_horaEntrada());
+            statement.setTimestamp(indice++, registroequipoDTO.getFechaSalida_horaSalida());
+
+            resultSet = statement.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println("error en el Delete " + e.getMessage());
+        } finally {
+            ResourceManager.close(statement);
+            if (!estaConectado) {
+                ResourceManager.close(conn);
+            }
         }
     }
 }

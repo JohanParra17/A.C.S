@@ -15,10 +15,9 @@ public class RegistroEquipo {
     private String propietarioEquipoCodigoBarras;
     private String propietarioCuentaTipoDocumento;
     private String propietarioCuentaNumeroDocumento;
-    private java.sql.Date fechaEntrada;
-    private java.sql.Time horaEntrada;
-    private java.sql.Date fechaSalida;
-    private java.sql.Time horaSalida;
+    private java.sql.Timestamp fechaEntrada_horaEntrada;
+    private java.sql.Timestamp fechaSalida_horaSalida;
+    
 
     public RegistroEquipo() {
     }
@@ -55,37 +54,22 @@ public class RegistroEquipo {
         this.propietarioCuentaNumeroDocumento = propietarioCuentaNumeroDocumento;
     }
 
-    public java.sql.Date getFechaEntrada() {
-        return fechaEntrada;
+    public java.sql.Timestamp getFechaEntrada_horaEntrada() {
+        return fechaEntrada_horaEntrada;
     }
 
-    public void setFechaEntrada(java.sql.Date fechaEntrada) {
-        this.fechaEntrada = fechaEntrada;
+    public void setFechaEntrada_horaEntrada(java.sql.Timestamp fechaEntrada_horaEntrada) {
+        this.fechaEntrada_horaEntrada = fechaEntrada_horaEntrada;
     }
 
-    public java.sql.Time getHoraEntrada() {
-        return horaEntrada;
+    public java.sql.Timestamp getFechaSalida_horaSalida() {
+        return fechaSalida_horaSalida;
     }
 
-    public void setHoraEntrada(java.sql.Time horaEntrada) {
-        this.horaEntrada = horaEntrada;
+    public void setFechaSalida_horaSalida(java.sql.Timestamp fechaSalida_horaSalida) {
+        this.fechaSalida_horaSalida = fechaSalida_horaSalida;
     }
 
-    public java.sql.Date getFechaSalida() {
-        return fechaSalida;
-    }
-
-    public void setFechaSalida(java.sql.Date fechaSalida) {
-        this.fechaSalida = fechaSalida;
-    }
-
-    public java.sql.Time getHoraSalida() {
-        return horaSalida;
-    }
-
-    public void setHoraSalida(java.sql.Time horaSalida) {
-        this.horaSalida = horaSalida;
-    }
     
     
 }

@@ -21,4 +21,7 @@ public interface RegistroEquipoDAO {
     public void update(RegistroEquipo registroEquipoDTO);
 
     public void updatePK(RegistroEquipoPk nuevo, RegistroEquipoPk viejo);
+    
+    public void delete(RegistroEquipo registroDTO);
+    
 }

@@ -6,7 +6,6 @@
 package edu.co.sena.proyecto.modelo.dao.mysql;
 
 import edu.co.sena.proyecto.modelo.dto.Registro;
-import edu.co.sena.proyecto.modelo.dto.RegistroEquipoPk;
 import edu.co.sena.proyecto.modelo.dto.RegistroPk;
 import edu.co.sena.proyecto.modelo.dto.ResourceManager;
 import java.sql.Connection;
@@ -21,18 +20,17 @@ import java.util.List;
  * @author Sena-901540
  */
 public class RegistroDAOImp {
-   private Connection conexion;
-    
+
+    private Connection conexion;
+
     private final String SQL_SELECT = "select * from " + getTableName() + "";
-    
+
     private final String SQL_INSERT = "INSERT INTO " + getTableName() + "\n"
             + "ID_REGISTRO,\n"
             + "CUENTA_TIPO_DOCUMENTO,\n"
             + "CUENTA_NUMERO_DOCUMENTO\n"
-            + "FECHA_ENTRADA\n"
-            + "HORA_ENTRADA\n"
-            + "FECHA_SALIDA\n"
-            + "HORA_SALIDA\n"
+            + "fechaEntrada_horaEntrada\n"
+            + "fechaSalida_horaSalida\n"
             + "VALUES\n"
             + "(?,?,?,?,?,?,?)";
 
@@ -41,19 +39,24 @@ public class RegistroDAOImp {
             + "ID_REGISTRO = ?,\n"
             + "WHERE CUENTA_TIPO_DOCUMENTO = ? "
             + "AND CUENTA_NUMERO_DOCUMENTO = ? "
-            + "AND FECHA_ENTRADA = ?"
-            + "AND HORA_ENTRADA = ? "
-            + "AND FECHA_SALIDA = ? "
-            + "AND HORA_SALIDA = ?";
-    
-    private final String SQL_UPDATEPK = "UPTADE" +getTableName() + "\n"
+            + "fechaEntrada_horaEntrada= ?"
+            + "fechaSalida_horaSalida = ? ";
+
+    private final String SQL_UPDATEPK = "UPTADE" + getTableName() + "\n"
             + "SET\n"
             + "ID_REGISTRO = ?,\n"
             + "CUENTA_TIPO_DOCUMENTO = ?"
             + "CUENTA_NUMERO_DOCUMENTO = ?"
+            + "fechaEntrada_horaEntrada= ?"
+            + "fechaSalida_horaSalida= ?"
             + "WHERE ID_REGISTRO = ?"
-            + "CUENTA_TIPO_DOCUMENTO = ? "
-            + "AND CUENTA_NUMERO_DOCUMENTO = ? ";
+            + "AND CUENTA_TIPO_DOCUMENTO = ? "
+            + "AND CUENTA_NUMERO_DOCUMENTO = ? "
+            + "AND fechaEntrada_horaEntrada = ? "
+            + "AND fechaSalida_horaSalida = ? ";
+
+    private final String SQL_DELETE = "DELET" + getTableName()
+            + "CUENTA_TIPO_DOCUMENTO = ?";
 
     public String getTableName() {
         return "acs.registro";
@@ -65,7 +68,7 @@ public class RegistroDAOImp {
         Connection conn = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        List<Registro> cuentas = new ArrayList<>();
+        List<Registro> registros = new ArrayList<>();
 
         try {
             // obtener el la conexion 
@@ -85,22 +88,20 @@ public class RegistroDAOImp {
 
             if (!resultSet.wasNull()) {
                 while (resultSet.next()) {
-                    Registro registro = new Registro();
-                    registro.setIdRegistro(resultSet.getInt(1));
-                    registro.setCuentaTipoDocumento(resultSet.getString(2));
-                    registro.setCuentaNumeroDocumento(resultSet.getString(3));
-                    registro.setFechaEntrada(resultSet.getDate(4));
-                    registro.setHoraEntrada(resultSet.getTime(5));
-                    registro.setFechaSalida(resultSet.getDate(6));
-                    registro.setHoraSalida(resultSet.getTime(7));
-                    
-                    
-                    
+                    Registro registro1 = new Registro();
+                    registro1.setIdRegistro(resultSet.getInt(1));
+                    registro1.setCuentaTipoDocumento(resultSet.getString(2));
+                    registro1.setCuentaNumeroDocumento(resultSet.getString(3));
+                    registro1.setFechaEntrada_horaEntrada(resultSet.getTimestamp(4));
+                    registro1.setFechaSalida_horaSalida(resultSet.getTimestamp(5));
+
+                    registros.add(registro1);
+
                 }
             }
 
         } catch (Exception _e) {
-            System.out.println("error en el findAll");
+            System.err.println("error en el findAll");
         } finally {
             ResourceManager.close(resultSet);
             ResourceManager.close(statement);
@@ -108,7 +109,7 @@ public class RegistroDAOImp {
                 ResourceManager.close(conn);
             }
         }
-        return cuentas;
+        return registros;
     }
 
     public void insert(Registro registroDTO) {
@@ -135,13 +136,8 @@ public class RegistroDAOImp {
             statement.setInt(indice++, registroDTO.getIdRegistro());
             statement.setString(indice++, registroDTO.getCuentaTipoDocumento());
             statement.setString(indice++, registroDTO.getCuentaNumeroDocumento());
-            statement.setDate(indice++, registroDTO.getFechaEntrada());
-            statement.setTime(indice++, registroDTO.getHoraEntrada());
-            statement.setDate(indice++, registroDTO.getFechaSalida());
-            statement.setTime(indice++, registroDTO.getHoraSalida());
-       
-          
-          
+            statement.setTimestamp(indice++, registroDTO.getFechaEntrada_horaEntrada());
+            statement.setTimestamp(indice++, registroDTO.getFechaSalida_horaSalida());
 
             resultSet = statement.executeUpdate();
 
@@ -180,11 +176,9 @@ public class RegistroDAOImp {
             statement.setInt(indice++, registroDTO.getIdRegistro());
             statement.setString(indice++, registroDTO.getCuentaTipoDocumento());
             statement.setString(indice++, registroDTO.getCuentaNumeroDocumento());
-            statement.setDate(indice++, registroDTO.getFechaEntrada());
-            statement.setTime(indice++, registroDTO.getHoraEntrada());
-            statement.setDate(indice++, registroDTO.getFechaSalida());
-            statement.setTime(indice++, registroDTO.getHoraSalida());
-       
+            statement.setTimestamp(indice++, registroDTO.getFechaEntrada_horaEntrada());
+            statement.setTimestamp(indice++, registroDTO.getFechaSalida_horaSalida());
+
             resultSet = statement.executeUpdate();
 
         } catch (Exception _e) {
@@ -196,7 +190,8 @@ public class RegistroDAOImp {
             }
         }
 
-    } 
+    }
+
     public void updatePK(RegistroPk nuevo, RegistroPk viejo) throws SQLException {
         Object conecion = null;
 
@@ -239,5 +234,42 @@ public class RegistroDAOImp {
 
         }
     }
-    
+
+    public void delete(Registro registroDTO) {
+        final boolean estaConectado = (conexion != null);
+        Connection conn = null;
+        PreparedStatement statement = null;
+        int resultSet;
+        try {
+            // obtener el la conexion 
+
+            if (estaConectado) {
+                conn = conexion;
+            } else {
+                conn = ResourceManager.getConection();
+            }
+
+            // construct the SQL statement
+            final String SQL = SQL_DELETE;
+            int indice = 1;
+            System.out.println("se ejecuto " + SQL);
+            statement = conn.prepareStatement(SQL);
+            statement.setString(indice++, registroDTO.getCuentaNumeroDocumento());
+            statement.setString(indice++, registroDTO.getCuentaTipoDocumento());
+            statement.setInt(indice++, registroDTO.getIdRegistro());
+            statement.setTimestamp(indice++, registroDTO.getFechaEntrada_horaEntrada());
+            statement.setTimestamp(indice++, registroDTO.getFechaSalida_horaSalida());
+
+            resultSet = statement.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println("error en el Delete " + e.getMessage());
+        } finally {
+            ResourceManager.close(statement);
+            if (!estaConectado) {
+                ResourceManager.close(conn);
+            }
+        }
+    }
+
 }

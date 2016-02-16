@@ -32,6 +32,7 @@ public class CuentaDAOImp implements CuentaDAO{
             + "SEGUNDO_NOMBRE\n"
             + "PRIMER_APELLIDO\n"
             + "SEGUNDO_APELLIDO\n"
+            + "ESTADO\n"
             + "CARGO\n"
             + "FOTO\n"
             + "VALUES";
@@ -44,6 +45,7 @@ public class CuentaDAOImp implements CuentaDAO{
             + "AND SEGUNDO_NOMBRE \n"
             + "AND PRIMER_APELLIDO \n"
             + "AND SEGUNDO_APELLIDO \n"
+            + "AND ESTADO \n"
             + "AND CARGO \n "
             + "AND FOTO ";
     
@@ -56,6 +58,7 @@ public class CuentaDAOImp implements CuentaDAO{
             + "SEGUNDO_NOMBRE = ? "
             + "PRIMER_APELLIDO = ?"
             + "SEGUNDO_APELLIDO = ? "
+            + "ESTADO = ? "
             + "CARGO = ? "
             + "FOTO = ?"
             + "WHERE TIPO_DOCUMENTO = ?,\n"
@@ -64,6 +67,7 @@ public class CuentaDAOImp implements CuentaDAO{
             + "AND SEGUNDO_NOMBRE = ? "
             + "AND PRIMER_APELLIDO = ?"
             + "AND SEGUNDO_APELLIDO = ? "
+            + "AND ESTADO = ? "
             + "AND CARGO = ? "
             + "AND FOTO = ?";
     
@@ -81,6 +85,7 @@ public class CuentaDAOImp implements CuentaDAO{
         return "acs.cuenta";
     }
 
+    @Override
     public List<Cuenta> findAll() {
         // declaracion de variables
         final boolean estaConectado = (conexion != null);
@@ -114,8 +119,9 @@ public class CuentaDAOImp implements CuentaDAO{
                     cuenta.setSegundoNombre(resultSet.getString(4));
                     cuenta.setPrimerApellido(resultSet.getString(5));
                     cuenta.setSegundoApellido(resultSet.getString(6));
-                    cuenta.setCargo(resultSet.getString(7));
-                    cuenta.setFoto(resultSet.getBlob(8));
+                    cuenta.setEstado(resultSet.getBoolean(7));
+                    cuenta.setCargo(resultSet.getString(8));
+                    cuenta.setFoto(resultSet.getBlob(9));
                     
                     cuentas.add(cuenta);
                 }
@@ -160,6 +166,7 @@ public class CuentaDAOImp implements CuentaDAO{
             statement.setString(indice++, cuentaDTO.getSegundoNombre());
             statement.setString(indice++, cuentaDTO.getPrimerApellido());
             statement.setString(indice++, cuentaDTO.getSegundoApellido());
+            statement.setBoolean(indice++, cuentaDTO.getEstado());
             statement.setString(indice++, cuentaDTO.getCargo());
             statement.setBlob(indice++, cuentaDTO.getFoto());
           
@@ -204,6 +211,7 @@ public class CuentaDAOImp implements CuentaDAO{
             statement.setString(indice++, cuentaDTO.getSegundoNombre());
             statement.setString(indice++, cuentaDTO.getPrimerApellido());
             statement.setString(indice++, cuentaDTO.getSegundoApellido());
+            statement.setBoolean(indice++, cuentaDTO.getEstado());
             statement.setString(indice++, cuentaDTO.getCargo());
             statement.setBlob(indice++, cuentaDTO.getFoto());
             resultSet = statement.executeUpdate();
@@ -248,6 +256,7 @@ public class CuentaDAOImp implements CuentaDAO{
             statement.setString(indice++, viejo.getSegundoNombre());
             statement.setString(indice++, viejo.getPrimerNombre());
             statement.setString(indice++, viejo.getSegundoApellido());
+            statement.setBoolean(indice++, viejo.getEstado());
             statement.setString(indice++, viejo.getCargo());
             statement.setBlob(indice++, viejo.getFoto());
 
@@ -257,6 +266,7 @@ public class CuentaDAOImp implements CuentaDAO{
             statement.setString(indice++, nuevo.getSegundoNombre());
             statement.setString(indice++, nuevo.getPrimerApellido());
             statement.setString(indice++, nuevo.getSegundoApellido());
+            statement.setBoolean(indice++, nuevo.getEstado());
             statement.setString(indice++, nuevo.getCargo());
             statement.setBlob(indice++, nuevo.getFoto());
 
@@ -300,6 +310,7 @@ public class CuentaDAOImp implements CuentaDAO{
             statement.setString(indice++, cuentaDTO.getSegundoNombre());
             statement.setString(indice++, cuentaDTO.getPrimerApellido());
             statement.setString(indice++, cuentaDTO.getSegundoApellido());
+            statement.setBoolean(indice++, cuentaDTO.getEstado());
             statement.setString(indice++, cuentaDTO.getCargo());
             statement.setBlob(indice++, cuentaDTO.getFoto());
 

@@ -19,6 +19,7 @@ public class CuentaPk {
     private String segundoNombre;
     private String primerApellido;
     private String segundoApellido;
+    private Boolean estado;
     private String cargo;
     private Blob foto;
 
@@ -88,7 +89,15 @@ public class CuentaPk {
     public void setFoto(Blob foto) {
         this.foto = foto;
     }
+    
+    
+public Boolean getEstado() {
+        return estado;
+    }
 
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
     @Override
     public String toString() {
         StringBuffer ret = new StringBuffer();
@@ -99,10 +108,13 @@ public class CuentaPk {
         ret.append("segundoNombre" + segundoNombre);
         ret.append("primeApellido" + primerApellido);
         ret.append("segundoApellido" + segundoApellido);
+        ret.append("estado" + estado);
         ret.append("cargo" + cargo);
         ret.append("foto" + foto);
         
         return ret.toString();
     }
+
+    
 
 }

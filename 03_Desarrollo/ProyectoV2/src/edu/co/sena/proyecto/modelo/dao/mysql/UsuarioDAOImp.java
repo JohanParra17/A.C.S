@@ -5,14 +5,13 @@
  */
 package edu.co.sena.proyecto.modelo.dao.mysql;
 
-import edu.co.sena.proyecto.modelo.daoo.PropietarioDAO;
+
 import edu.co.sena.proyecto.modelo.daoo.UsuarioDAO;
 import edu.co.sena.proyecto.modelo.dto.ResourceManager;
 import edu.co.sena.proyecto.modelo.dto.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,9 +37,11 @@ public class UsuarioDAOImp implements UsuarioDAO {
             + "CUENTA_TIPO_DOCUMENTO = ?,\n"
             + "WHERE CUENTA_NUEMRO_DOCUMENTO = ? "
             + "AND PASSWORD = ?";
+    
 public final String SQL_DELETE = "DELETE" + getTableName() + 
         
     "PASSWORD\n";
+
     public String getTableName() {
         return "acs.usuario";
     }
@@ -52,7 +53,7 @@ public final String SQL_DELETE = "DELETE" + getTableName() +
         Connection conn = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        List<Usuario> Usuario = new ArrayList<>();
+        List<Usuario> usuarios = new ArrayList<>();
 
         try {
             // obtener el la conexion 
@@ -72,16 +73,18 @@ public final String SQL_DELETE = "DELETE" + getTableName() +
 
             if (!resultSet.wasNull()) {
                 while (resultSet.next()) {
-                    Usuario usuario1 = new Usuario();
-                    usuario1.setCuentaTipoDocumento(resultSet.getString(1));
-                    usuario1.setCuentaNumeroDocumento(resultSet.getString(2));
-                    usuario1.setPassword(resultSet.getString(3));
+                    Usuario usuario = new Usuario();
+                    usuario.setCuentaTipoDocumento(resultSet.getString(1));
+                    usuario.setCuentaNumeroDocumento(resultSet.getString(2));
+                    usuario.setPassword(resultSet.getString(3));
+                    
+                    usuarios.add(usuario);
 
                 }
             }
 
         } catch (Exception _e) {
-            System.out.println("error en el findAll");
+            System.err.println("error en el findAll");
         } finally {
             ResourceManager.close(resultSet);
             ResourceManager.close(statement);
@@ -89,9 +92,10 @@ public final String SQL_DELETE = "DELETE" + getTableName() +
                 ResourceManager.close(conn);
             }
         }
-        return Usuario;
+        return usuarios;
     }
 
+    @Override
     public void insert(Usuario usuarioDTO) {
         // declaracion de variables
         final boolean estaConectado = (conexion != null);

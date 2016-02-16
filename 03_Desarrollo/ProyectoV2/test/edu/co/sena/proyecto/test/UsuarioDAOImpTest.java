@@ -48,10 +48,12 @@ public class UsuarioDAOImpTest {
     public void testfindAll() {
         System.out.println("FindAll");
         UsuarioDAOImp instance = new UsuarioDAOImp();
-        List<Usuario> usuario1 = instance.findAll();
-        for (Usuario usuario11 : usuario1) {
+        instance.findAll();
+        List<Usuario> usuario = instance.findAll();
+        for (Usuario usuario1 : usuario) {
             System.out.println(usuario1.toString());
         }
+        
             
         }
     @Test
