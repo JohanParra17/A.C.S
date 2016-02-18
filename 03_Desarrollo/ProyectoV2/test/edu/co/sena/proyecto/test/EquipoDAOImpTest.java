@@ -6,7 +6,11 @@ package edu.co.sena.proyecto.test;
  * and open the template in the editor.
  */
 
+import edu.co.sena.modulo.factory.DAOAbstractFactory;
+import edu.co.sena.modulo.factory.DAOFactory;
+import edu.co.sena.modulo.factory.MysqlDAOFactory;
 import edu.co.sena.proyecto.modelo.dao.mysql.EquipoDAOImp;
+import edu.co.sena.proyecto.modelo.daoo.EquipoDAO;
 import edu.co.sena.proyecto.modelo.dto.Equipo;
 import edu.co.sena.proyecto.modelo.dto.EquipoPk;
 import java.util.List;
@@ -49,10 +53,11 @@ public class EquipoDAOImpTest {
     @Test
     public void testfindAll() {
         System.out.println("FindAll");
-        EquipoDAOImp instance = new EquipoDAOImp();
+        DAOFactory fact = MysqlDAOFactory.getDAOFactory(DAOAbstractFactory.MYSQL_FACTORY);
+        EquipoDAO instance = fact.creaEquipoDAO();
         List<Equipo> equipo1 = instance.findAll();
         for (Equipo equipo : equipo1) {
-            System.out.println(equipo1.toString());
+            System.out.println(equipo.toString());
             
         }
 
@@ -62,11 +67,11 @@ public class EquipoDAOImpTest {
     public void testInsert() {
         System.out.println("insert");
         Equipo equipoDTO = new Equipo();
-        equipoDTO.setCodigoBarras("123458478");
+        equipoDTO.setCodigoBarras("7 0077-7777");
         equipoDTO.setMarca("DELL");
         equipoDTO.setDescripcion("CP negro");
-
-        EquipoDAOImp instance = new EquipoDAOImp();
+        DAOFactory fact = MysqlDAOFactory.getDAOFactory(DAOAbstractFactory.MYSQL_FACTORY);
+        EquipoDAO instance = fact.creaEquipoDAO();
         instance.insert(equipoDTO);
 
     }
@@ -75,10 +80,12 @@ public class EquipoDAOImpTest {
     public void testUpdate() {
         System.out.println("update");
         Equipo equipoDTO = new Equipo();
-        equipoDTO.setCodigoBarras("123458478");
+        equipoDTO.setCodigoBarras("7 00777-7777");
         equipoDTO.setMarca("DELL");
         equipoDTO.setDescripcion("CP negro");
-        EquipoDAOImp instance = new EquipoDAOImp();
+        
+        DAOFactory fact = MysqlDAOFactory.getDAOFactory(DAOAbstractFactory.MYSQL_FACTORY);
+        EquipoDAO instance = fact.creaEquipoDAO();
         instance.insert(equipoDTO);
     }
 
@@ -90,8 +97,8 @@ public class EquipoDAOImpTest {
         EquipoPk viejo = new EquipoPk();
         EquipoDAOImp instance = new EquipoDAOImp();
 
-        nuevo.setCodigoBarras("1548658");
-        viejo.setCodigoBarras("15487A");
+        nuevo.setCodigoBarras("2341654");
+        viejo.setCodigoBarras("1165435");
         instance.updatePK(nuevo, viejo);
 
     }

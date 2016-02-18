@@ -26,7 +26,9 @@ public class CuentaPk {
     public CuentaPk() {
     }
 
-    public String getTipoDocumento() {
+    
+
+     public String getTipoDocumento() {
         return tipoDocumento;
     }
 
@@ -74,6 +76,14 @@ public class CuentaPk {
         this.segundoApellido = segundoApellido;
     }
 
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
     public String getCargo() {
         return cargo;
     }
@@ -89,18 +99,11 @@ public class CuentaPk {
     public void setFoto(Blob foto) {
         this.foto = foto;
     }
-    
-    
-public Boolean getEstado() {
-        return estado;
-    }
 
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
-    }
+    
     @Override
     public String toString() {
-        StringBuffer ret = new StringBuffer();
+        StringBuilder ret = new StringBuilder();
         ret.append("edu.co.sena.ejemplodao.dto.cuentaPk");
         ret.append("tipoDocumento" + tipoDocumento);
         ret.append("numeroDocumento" + numeroDocumento);
@@ -115,6 +118,7 @@ public Boolean getEstado() {
         return ret.toString();
     }
 
+   
     
 
 }

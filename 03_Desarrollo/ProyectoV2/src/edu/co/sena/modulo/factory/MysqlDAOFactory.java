@@ -22,30 +22,38 @@ import edu.co.sena.proyecto.modelo.daoo.UsuarioDAO;
  *
  * @author Sebestian
  */
-public class MYSQL_FACTORY extends AbstrctFactory{
+public class MysqlDAOFactory extends DAOAbstractFactory{
 
-    public CuentaDAO creaCuenta() {
+    @Override
+    public CuentaDAO creaCuentaDAO() {
        return new CuentaDAOImp();
     }
 
-    public EquipoDAO creaDispositivo() {
+    @Override
+    public EquipoDAO creaEquipoDAO() {
        return new  EquipoDAOImp();
     }
 
-    public PropietarioDAO creaPropietario() {
+    @Override
+    public PropietarioDAO creaPropietarioDAO() {
       return new PropietarioDAOImp();
     }
 
-    public RegistroDAO creaRegistro() {
-     return  (RegistroDAO) new RegistroDAOImp();
-    }
+    
 
-    public RegistroEquipoDAO creaRegistroEquipo() {
+    @Override
+    public RegistroEquipoDAO creaRegistroEquipoDAO() {
         return new RegistroEquipoDAOImp();
                 }
 
-    public UsuarioDAO creaUsuario() {
+    @Override
+    public UsuarioDAO creaUsuarioDAO() {
      return new UsuarioDAOImp();
+    }
+
+    @Override
+    public RegistroDAO creaRegistroDAO() {
+     return new RegistroDAOImp();
     }
     
 }

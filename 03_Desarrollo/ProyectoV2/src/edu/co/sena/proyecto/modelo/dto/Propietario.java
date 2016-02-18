@@ -11,8 +11,8 @@ package edu.co.sena.proyecto.modelo.dto;
  */
 public class Propietario {
     private String equipoCodigoBarras;
-    private String usuarioTipoDocumento;
-    private String usuarioNumeroDocumento;
+    private String cuentaTipoDocumento;
+    private String cuentaNumeroDocumento;
 
     public Propietario() {
     }
@@ -25,20 +25,20 @@ public class Propietario {
         this.equipoCodigoBarras = equipoCodigoBarras;
     }
 
-    public String getUsuarioTipoDocumento() {
-        return usuarioTipoDocumento;
+    public String getCuentaTipoDocumento() {
+        return cuentaTipoDocumento;
     }
 
-    public void setUsuarioTipoDocumento(String usuarioTipoDocumento) {
-        this.usuarioTipoDocumento = usuarioTipoDocumento;
+    public void setCuentaTipoDocumento(String cuentaTipoDocumento) {
+        this.cuentaTipoDocumento = cuentaTipoDocumento;
     }
 
-    public String getUsuarioNumeroDocumento() {
-        return usuarioNumeroDocumento;
+    public String getCuentaNumeroDocumento() {
+        return cuentaNumeroDocumento;
     }
 
-    public void setUsuarioNumeroDocumento(String usuarioNumeroDocumento) {
-        this.usuarioNumeroDocumento = usuarioNumeroDocumento;
+    public void setCuentaNumeroDocumento(String cuentaNumeroDocumento) {
+        this.cuentaNumeroDocumento = cuentaNumeroDocumento;
     }
 
     

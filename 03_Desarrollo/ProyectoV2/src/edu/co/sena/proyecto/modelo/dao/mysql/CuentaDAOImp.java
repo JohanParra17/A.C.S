@@ -25,61 +25,41 @@ public class CuentaDAOImp implements CuentaDAO{
     
     private final String SQL_SELECT = "select * from " + getTableName() + "";
     
-    private final String SQL_INSERT = "INSERT  " + getTableName() + "\n"
-            + "TIPO_DOCUMENTO,\n"
+    private final String SQL_INSERT = "INSERT INTO " + getTableName() + "\n"
+            + "(TIPO_DOCUMENTO,\n"
             + "NUMERO_DOCUMENTO,\n"
-            + "PRIMER_NOMBRE\n"
-            + "SEGUNDO_NOMBRE\n"
-            + "PRIMER_APELLIDO\n"
-            + "SEGUNDO_APELLIDO\n"
-            + "ESTADO\n"
-            + "CARGO\n"
-            + "FOTO\n"
-            + "VALUES";
+            + "PRIMER_NOMBRE, \n"
+            + "SEGUNDO_NOMBRE, \n"
+            + "PRIMER_APELLIDO, \n"
+            + "SEGUNDO_APELLIDO, \n"
+            + "ESTADO, \n"
+            + "CARGO, \n"
+            + "FOTO ) \n"
+            + "VALUES"
+            + "(?,?,?,?,?,?,?,?,?);";
 
     private final String SQL_UPDATE = "UPDATE " + getTableName() + "\n"
-            + "SET\n"
-            + "TIPO_DOCUMENTO \n"
-            + "WHERE NUMERO_DOCUMENTO \n"
-            + "AND PRIMER_NOMBRE \n"
-            + "AND SEGUNDO_NOMBRE \n"
-            + "AND PRIMER_APELLIDO \n"
-            + "AND SEGUNDO_APELLIDO \n"
-            + "AND ESTADO \n"
-            + "AND CARGO \n "
-            + "AND FOTO ";
+            + "  SET \n"
+            + " PRIMER_NOMBRE = ?, \n"
+            + " SEGUNDO_NOMBRE = ?, \n"
+            + " PRIMER_APELLIDO = ?, \n"
+            + " SEGUNDO_APELLIDO = ?, \n"
+            + " ESTADO = ?, \n"
+            + " CARGO = ?, \n "
+            + " FOTO = ? "
+            +" WHERE NUMERO_DOCUMENTO = ?  AND TIPO_DOCUMENTO = ?;";
     
     
-    private final String SQL_UPDATEPK = "UPDATEPK " + getTableName() + "\n"
-            + "SET\n "
+    private final String SQL_UPDATEPK = "UPDATE " + getTableName() + "\n"
+            + " SET\n "
             + "TIPO_DOCUMENTO = ?,\n"
-            + "NUMERO_DOCUMENTO = ? "
-            + "PRIMER_NOMBRE = ? "
-            + "SEGUNDO_NOMBRE = ? "
-            + "PRIMER_APELLIDO = ?"
-            + "SEGUNDO_APELLIDO = ? "
-            + "ESTADO = ? "
-            + "CARGO = ? "
-            + "FOTO = ?"
-            + "WHERE TIPO_DOCUMENTO = ?,\n"
-            + "WHERE NUMERO_DOCUMENTO = ? "
-            + "AND PRIMER_NOMBRE = ? "
-            + "AND SEGUNDO_NOMBRE = ? "
-            + "AND PRIMER_APELLIDO = ?"
-            + "AND SEGUNDO_APELLIDO = ? "
-            + "AND ESTADO = ? "
-            + "AND CARGO = ? "
-            + "AND FOTO = ?";
+            + "NUMERO_DOCUMENTO = ? " 
+            + "WHERE NUMERO_DOCUMENTO = ? \n "
+            + "AND TIPO_DOCUMENTO = ?; ";
     
-    private final  String SQL_DELETE = "DELETE" +getTableName() + "\n"
-            +" WHERE TIPO_DOCUMENTO = ?,\n"
-            + "NUMERO_DOCUMENTO = ? "
-            + "PRIMER_NOMBRE = ? "
-            + "SEGUNDO_NOMBRE = ? "
-            + "PRIMER_APELLIDO = ?"
-            + "SEGUNDO_APELLIDO = ? "
-            + "CARGO = ? "
-            + "FOTO = ?;";
+    private final  String SQL_DELETE = "DELETE FROM " +getTableName() + "\n"
+            + " WHERE TIPO_DOCUMENTO = ? ; ";
+            
 
     public String getTableName() {
         return "acs.cuenta";
@@ -127,7 +107,7 @@ public class CuentaDAOImp implements CuentaDAO{
                 }
             }
 
-        } catch (Exception _e) {
+        } catch (Exception e) {
             System.out.println("error en el findAll");
         } finally {
             ResourceManager.close(resultSet);
@@ -139,6 +119,7 @@ public class CuentaDAOImp implements CuentaDAO{
         return cuentas;
     }
 
+    @Override
     public void insert(Cuenta cuentaDTO) {
         // declaracion de variables
         final boolean estaConectado = (conexion != null);
@@ -173,8 +154,8 @@ public class CuentaDAOImp implements CuentaDAO{
 
             resultSet = statement.executeUpdate();
 
-        } catch (Exception _e) {
-            System.out.println("error en el insert");
+        } catch (Exception e) {
+            System.err.println("error en el insert "+e.getMessage());
         } finally {
             ResourceManager.close(statement);
             if (!estaConectado) {
@@ -184,6 +165,8 @@ public class CuentaDAOImp implements CuentaDAO{
 
     }
 
+
+    @Override
     public void update(Cuenta cuentaDTO) {
         // declaracion de variables
         final boolean estaConectado = (conexion != null);
@@ -214,10 +197,12 @@ public class CuentaDAOImp implements CuentaDAO{
             statement.setBoolean(indice++, cuentaDTO.getEstado());
             statement.setString(indice++, cuentaDTO.getCargo());
             statement.setBlob(indice++, cuentaDTO.getFoto());
+            
             resultSet = statement.executeUpdate();
 
-        } catch (Exception _e) {
-            System.out.println("error en el findAll");
+        } catch (Exception e) {
+            
+            System.out.println("error en el findAll"+ e.getMessage());
         } finally {
             ResourceManager.close(statement);
             if (!estaConectado) {
@@ -252,28 +237,16 @@ public class CuentaDAOImp implements CuentaDAO{
 
             statement.setString(indice++, viejo.getTipoDocumento());
             statement.setString(indice++, viejo.getNumeroDocumento());
-            statement.setString(indice++, viejo.getPrimerNombre());
-            statement.setString(indice++, viejo.getSegundoNombre());
-            statement.setString(indice++, viejo.getPrimerNombre());
-            statement.setString(indice++, viejo.getSegundoApellido());
-            statement.setBoolean(indice++, viejo.getEstado());
-            statement.setString(indice++, viejo.getCargo());
-            statement.setBlob(indice++, viejo.getFoto());
+            
 
             statement.setString(indice++, nuevo.getTipoDocumento());
             statement.setString(indice++, nuevo.getNumeroDocumento());
-            statement.setString(indice++, nuevo.getPrimerNombre());
-            statement.setString(indice++, nuevo.getSegundoNombre());
-            statement.setString(indice++, nuevo.getPrimerApellido());
-            statement.setString(indice++, nuevo.getSegundoApellido());
-            statement.setBoolean(indice++, nuevo.getEstado());
-            statement.setString(indice++, nuevo.getCargo());
-            statement.setBlob(indice++, nuevo.getFoto());
+           
 
             resultSet = statement.executeUpdate();
 
-        } catch (Exception _e) {
-            System.out.println("error en el UpdatePK");
+        } catch (Exception e) {
+            System.out.println("error en el UpdatePK"+ e.getMessage());
         } finally {
             ResourceManager.close(statement);
             if (!estaConectado) {
@@ -304,15 +277,9 @@ public class CuentaDAOImp implements CuentaDAO{
             int indice = 1;
             System.out.println("se ejecuto " + SQL);
             statement = conn.prepareStatement(SQL);
-            statement.setString(indice++, cuentaDTO.getTipoDocumento());
-            statement.setString(indice++, cuentaDTO.getNumeroDocumento());
-            statement.setString(indice++, cuentaDTO.getPrimerNombre());
-            statement.setString(indice++, cuentaDTO.getSegundoNombre());
-            statement.setString(indice++, cuentaDTO.getPrimerApellido());
-            statement.setString(indice++, cuentaDTO.getSegundoApellido());
-            statement.setBoolean(indice++, cuentaDTO.getEstado());
-            statement.setString(indice++, cuentaDTO.getCargo());
-            statement.setBlob(indice++, cuentaDTO.getFoto());
+            
+            statement.setString(indice, cuentaDTO.getSegundoNombre());
+          
 
             resultSet = statement.executeUpdate();
 
@@ -325,5 +292,7 @@ public class CuentaDAOImp implements CuentaDAO{
             }
         }
     }
+
+    
     }
 

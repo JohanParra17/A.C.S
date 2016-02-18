@@ -23,4 +23,8 @@ public interface UsuarioDAO {
     public void delete(Usuario propietarioDTO);
     
     
+    
+    
+    
+    
 }

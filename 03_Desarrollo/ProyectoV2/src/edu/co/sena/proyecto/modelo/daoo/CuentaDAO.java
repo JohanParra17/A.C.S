@@ -14,15 +14,16 @@ import java.util.List;
  * @author Sena-901540
  */
 public interface CuentaDAO {
-    public abstract String getTableName();
 
-    public abstract List<Cuenta> findAll();
+    public  List<Cuenta> findAll();
 
-    public abstract void insert(Cuenta cuentaDTO);
+    public  void insert(Cuenta cuentaDTO);
 
-    public abstract void update(Cuenta cuentaDTO);
-    
-    public void updatePK( CuentaPk nuevo, CuentaPk viejo);
-    
+    public  void update(Cuenta cuenataDTO);
+
+    public void updatePK(CuentaPk viejo, CuentaPk nuevo);
+
     public void delete(Cuenta cuentaDTO);
+    
+   
 }

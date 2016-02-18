@@ -6,7 +6,6 @@
 package edu.co.sena.proyecto.modelo.daoo;
 
 import edu.co.sena.proyecto.modelo.dto.RegistroEquipo;
-import edu.co.sena.proyecto.modelo.dto.RegistroEquipoPk;
 import java.util.List;
 
 /**
@@ -18,10 +17,7 @@ public interface RegistroEquipoDAO {
 
     public void insert(RegistroEquipo registroEquipoDTO);
 
-    public void update(RegistroEquipo registroEquipoDTO);
-
-    public void updatePK(RegistroEquipoPk nuevo, RegistroEquipoPk viejo);
     
-    public void delete(RegistroEquipo registroDTO);
+    
     
 }

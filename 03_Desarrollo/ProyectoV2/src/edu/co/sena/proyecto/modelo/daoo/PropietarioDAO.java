@@ -6,7 +6,7 @@
 package edu.co.sena.proyecto.modelo.daoo;
 
 import edu.co.sena.proyecto.modelo.dto.Propietario;
-import edu.co.sena.proyecto.modelo.dto.PropietarioPk;
+
 import java.util.List;
 
 /**
@@ -17,10 +17,6 @@ public interface PropietarioDAO {
     public List<Propietario> findAll();
 
     public void insert(Propietario propietarioDTO);
-
-    public void update(Propietario propietarioDTO);
-
-    public void updatePK(PropietarioPk nuevo, PropietarioPk viejo);
     
     public void delete(Propietario propietarioDTO);
 }

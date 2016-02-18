@@ -9,14 +9,14 @@ package edu.co.sena.modulo.factory;
  *
  * @author Sebestian
  */
-public abstract class AbstrctFactory implements DAOFactory {
+public abstract class DAOAbstractFactory implements DAOFactory {
 
     public static final int MYSQL_FACTORY = 1;
 
-    public static final AbstrctFactory GETDAO_FACTORY(int factoryType) {
+    public static final DAOAbstractFactory getDAOFactory(int factoryType) {
         switch (factoryType) {
             case MYSQL_FACTORY:
-                return new MYSQL_FACTORY();
+                return new MysqlDAOFactory();
             default:
                 System.out.println("Esta base de datos no esta disponible.");
                 return null;

@@ -16,11 +16,11 @@ import edu.co.sena.proyecto.modelo.daoo.UsuarioDAO;
  *
  * @author Sebestian
  */
-interface DAOFactory {
-    public CuentaDAO creaCuenta();
-    public EquipoDAO creaDispositivo();    
-    public PropietarioDAO creaPropietario();
-    public RegistroDAO creaRegistro();
-    public RegistroEquipoDAO creaRegistroEquipo();
-    public UsuarioDAO creaUsuario();
+public interface DAOFactory {
+    public CuentaDAO creaCuentaDAO();
+    public EquipoDAO creaEquipoDAO();    
+    public PropietarioDAO creaPropietarioDAO();
+    public RegistroDAO creaRegistroDAO();
+    public RegistroEquipoDAO creaRegistroEquipoDAO();
+    public UsuarioDAO creaUsuarioDAO();
 }

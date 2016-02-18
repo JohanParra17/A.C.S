@@ -19,39 +19,34 @@ import java.util.List;
  *
  * @author SebasH
  */
-public class EquipoDAOImp implements EquipoDAO{
-    
+public class EquipoDAOImp implements EquipoDAO {
+
     private Connection conexion;
-    
+
     private final String SQL_SELECT = "select * from " + getTableName() + "";
-    
+
     private final String SQL_INSERT = "INSERT INTO " + getTableName() + "\n"
-            + "CODIGO_BARRAS,\n"
+            + "(CODIGO_BARRAS,\n"
             + "MARCA,\n"
-            + "DESCRIPCION\n"
+            + "DESCRIPCION) \n"
             + "VALUES\n"
             + "(?,?,?)";
 
     private final String SQL_UPDATE = "UPDATE " + getTableName() + "\n"
             + "SET\n"
-            + "CODIGO_BARRAS = ?,\n"
-            + "WHERE MARCA = ? "
-            + "AND DESCRIPCION = ?";
+            + "MARCA = ?,\n"
+            + "DESCRIPCION = ? "
+            + "WHERE CODIGO_BARRAS = ?;";
 
     private final String SQL_UPDATEPK = "UPDATE " + getTableName() + "\n"
-            + "SET\n"
-            + "CODIGO_BARRAS = ?,\n"
-            + "MARCA = ?"
-            + "DESCRIPCION = ?"
-            + "WHERE CODIGO_BARRAS = ?"
-            + "AND MARCA = ? "
-            + "AND DESCRIPCION = ?";
-    
-    private final  String SQL_DELETE = "DELETE" +getTableName() + "\n"
-            +" WHERE CODIGO_BARRAS = ?,\n"
-            + "MARCA = ? "
-            + "DESCRIPCION = ?;";
+            + "SET \n"
+            + "CODIGO_BARRAS = ? \n"
+            + "WHERE CODIGO_BARRAS = ?;";
 
+    private final String SQL_DELETE = "DELETE FROM " + getTableName() + "\n"
+            + " WHERE CODIGO_BARRAS = ? ;\n";
+
+    @Override
     public String getTableName() {
         return "acs.equipo";
     }
@@ -87,13 +82,13 @@ public class EquipoDAOImp implements EquipoDAO{
                     equipo.setCodigoBarras(resultSet.getString(1));
                     equipo.setMarca(resultSet.getString(2));
                     equipo.setDescripcion(resultSet.getString(3));
-                    
-                   equipos.add(equipo);
+
+                    equipos.add(equipo);
                 }
             }
 
-        } catch (Exception _e) {
-            System.out.println("error en el findAll");
+        } catch (Exception e) {
+            System.out.println("error en el findAll" + e.getMessage());
         } finally {
             ResourceManager.close(resultSet);
             ResourceManager.close(statement);
@@ -128,13 +123,11 @@ public class EquipoDAOImp implements EquipoDAO{
             statement.setString(indice++, equipoDTO.getCodigoBarras());
             statement.setString(indice++, equipoDTO.getMarca());
             statement.setString(indice++, equipoDTO.getDescripcion());
-         
-          
 
             resultSet = statement.executeUpdate();
 
-        } catch (Exception _e) {
-            System.out.println("error en el findAll");
+        } catch (Exception e) {
+            System.out.println("error en el findAll" + e.getMessage());
         } finally {
             ResourceManager.close(statement);
             if (!estaConectado) {
@@ -170,8 +163,8 @@ public class EquipoDAOImp implements EquipoDAO{
             statement.setString(indice++, equipoDTO.getDescripcion());
             resultSet = statement.executeUpdate();
 
-        } catch (Exception _e) {
-            System.out.println("error en el findAll");
+        } catch (Exception e) {
+            System.out.println("error en el findAll" + e.getMessage());
         } finally {
             ResourceManager.close(statement);
             if (!estaConectado) {
@@ -183,7 +176,7 @@ public class EquipoDAOImp implements EquipoDAO{
 
     @Override
     public void updatePK(EquipoPk nuevo, EquipoPk viejo) {
-       
+
         Object conecion = null;
 
         // declaracion de variables
@@ -206,17 +199,13 @@ public class EquipoDAOImp implements EquipoDAO{
             statement = conn.prepareStatement(SQL);
 
             statement.setString(indice++, viejo.getCodigoBarras());
-            statement.setString(indice++, viejo.getMarca());
-            statement.setString(indice++, viejo.getDescripcion());
 
             statement.setString(indice++, nuevo.getCodigoBarras());
-            statement.setString(indice++, nuevo.getMarca());
-            statement.setString(indice++, nuevo.getDescripcion());
-            
+
             resultSet = statement.executeUpdate();
 
-        } catch (Exception _e) {
-            System.out.println("error en el UpdatePK");
+        } catch (Exception e) {
+            System.out.println("error en el UpdatePK" + e.getMessage());
         } finally {
             ResourceManager.close(statement);
             if (!estaConectado) {
@@ -227,7 +216,7 @@ public class EquipoDAOImp implements EquipoDAO{
     }
 
     public void delete(Equipo equipoDTO) {
-       final boolean estaConectado = (conexion != null);
+        final boolean estaConectado = (conexion != null);
         Connection conn = null;
         PreparedStatement statement = null;
         int resultSet;
@@ -246,9 +235,8 @@ public class EquipoDAOImp implements EquipoDAO{
             int indice = 1;
             System.out.println("se ejecuto " + SQL);
             statement = conn.prepareStatement(SQL);
-            statement.setString(indice++, equipoDTO.getCodigoBarras());
-            statement.setString(indice++, equipoDTO.getMarca());
-            statement.setString(indice++, equipoDTO.getDescripcion());
+            statement.setString(indice, equipoDTO.getCodigoBarras());
+            
             resultSet = statement.executeUpdate();
 
         } catch (Exception e) {
@@ -260,9 +248,4 @@ public class EquipoDAOImp implements EquipoDAO{
             }
         }
     }
-    }
-
-    
-    
-
-
+}
