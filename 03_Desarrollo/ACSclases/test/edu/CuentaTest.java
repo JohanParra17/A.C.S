@@ -50,21 +50,24 @@ public class CuentaTest {
     // The methods must be annotated with annotation @Test. For example:
     //
      @Test
-    public void pruebaCuenta() {
-    Cuenta c1 = new Cuenta();
-    c1.setTipoDocumento("C.C");
-    c1.setNumeroDocumento(1020824947);
+    public void pruebaUsuario() {
+        
+         System.out.println("------Usuario--------");
+    Usuario c1 = new Usuario();
+    c1.setCuentaTipoDocumento("C.C");
+    c1.setCuentaNumeroDocumento(1020824947);
     c1.setPassword("12345");
     
     
-         System.out.println(c1.getTipoDocumento());
-         System.out.println(c1.getNumeroDocumento());
+         System.out.println(c1.getCuentaTipoDocumento());
+         System.out.println(c1.getCuentaNumeroDocumento());
          System.out.println(c1.getPassword());
     }
     
     @Test
-    public void pruebaUsuario() {
-        Usuario u1 = new Usuario();
+    public void pruebaCuenta() {
+        System.out.println("------------Cuenta---------");
+        Cuenta u1 = new Cuenta();
         u1.setCargo("Aprendiz");
         u1.setTipoDocumento("C.C");
         u1.setNumeroDocumento(1012437950);
@@ -85,19 +88,23 @@ public class CuentaTest {
     }
     @Test
     public void pruebaEquipo() {
+        System.out.println("-----------Equipo-----------");
+        
         Equipo eq = new Equipo();
-        eq.setMarca("asus");
         eq.setIdEquipo("5459597");
+        eq.setMarca("asus");
         eq.setDescripcion("equipo negro");
         
-        System.out.println(eq.getMarca());
         System.out.println(eq.getIdEquipo());
+        System.out.println(eq.getMarca());
         System.out.println(eq.getDescripcion());
         
         
     }
      @Test
     public void pruebaRegistro() {
+        
+         System.out.println("--------Registro---------");
          Registro r1 = new Registro();
          r1.setIdRegistro(01);
          r1.setFechaEntrada(new Date(01, 11, 2015));
@@ -114,14 +121,16 @@ public class CuentaTest {
     
     @Test
     public void pruebaRegistroEquipo() {
-        
+        System.out.println("-------------Registro-Equipo------------");
        RegistroEquipo re = new RegistroEquipo();
-         re.setPropietarioEquipoIdEquipo("Juan56+1469");
+         re.setRegistroIdRegistro(001);
+         re.setPropietarioEquipoIdEquipo(" ID Equipo: "+ "7 1207 7777");
          re.setFechaEntrada(new Date(01, 11, 2015));
          re.setHoraEntrada(new Time(12, 55, 01));
          re.setFechaSalida(new Date(01, 11, 2015));
          re.setHoraSalida(new Time(02, 45, 25));
          
+         System.out.println(re.getRegistroIdRegistro());
          System.out.println(re.getPropietarioEquipoIdEquipo());
          System.out.println(re.getFechaEntrada());
          System.out.println(re.getHoraEntrada());
@@ -131,15 +140,16 @@ public class CuentaTest {
     }
     @Test
     public void pruebaPropietario() {
+        System.out.println("------------Propietario----------");
         Propietario pr1 = new Propietario();
-        pr1.setEquipoIdEquipo("5145678");
-        pr1.setUsuarioNumeroDocumento(1012437950);
-        pr1.setUsuarioTipoDocumento("C.C");
-        
+        pr1.setEquipoIdEquipo("ID Equipo: "+"5145678");  
+        pr1.setCuentaTipoDocumento("Tipo y Numero de documento: "+"C.C");
+        pr1.setCuentaNumeroDocumento(1012437950);
+      
         
         System.out.println(pr1.getEquipoIdEquipo());
-        System.out.println(pr1.getUsuarioNumeroDocumento());
-        System.out.println(pr1.getUsuarioTipoDocumento());
+        System.out.println(pr1.getCuentaTipoDocumento());
+        System.out.println(pr1.getCuentaNumeroDocumento());
         
         
     }

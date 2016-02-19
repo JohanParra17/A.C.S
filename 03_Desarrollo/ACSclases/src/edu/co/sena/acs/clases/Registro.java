@@ -12,8 +12,8 @@ package edu.co.sena.acs.clases;
 public class Registro {
    private RegistroEquipo registroequipo;
    private int idRegistro;
-   private String usuarioTipoDocumento;
-   private int usuarioNumeroDocumento;
+   private String cuentaTipoDocumento;
+   private int cuentaNumeroDocumento;
    private java.sql.Date fechaEntrada;
    private java.sql.Time horaEntrada;
    private java.sql.Date fechaSalida;
@@ -38,20 +38,20 @@ public class Registro {
         this.idRegistro = idRegistro;
     }
 
-    public String getUsuarioTipoDocumento() {
-        return usuarioTipoDocumento;
+    public String getCuentaTipoDocumento() {
+        return cuentaTipoDocumento;
     }
 
-    public void setUsuarioTipoDocumento(String usuarioTipoDocumento) {
-        this.usuarioTipoDocumento = usuarioTipoDocumento;
+    public void setCuentaTipoDocumento(String cuentaTipoDocumento) {
+        this.cuentaTipoDocumento = cuentaTipoDocumento;
     }
 
-    public int getUsuarioNumeroDocumento() {
-        return usuarioNumeroDocumento;
+    public int getCuentaNumeroDocumento() {
+        return cuentaNumeroDocumento;
     }
 
-    public void setUsuarioNumeroDocumento(int usuarioNumeroDocumento) {
-        this.usuarioNumeroDocumento = usuarioNumeroDocumento;
+    public void setCuentaNumeroDocumento(int cuentaNumeroDocumento) {
+        this.cuentaNumeroDocumento = cuentaNumeroDocumento;
     }
 
     public java.sql.Date getFechaEntrada() {
@@ -85,6 +85,8 @@ public class Registro {
     public void setHoraSalida(java.sql.Time horaSalida) {
         this.horaSalida = horaSalida;
     }
+
+  
    
    
    

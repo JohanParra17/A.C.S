@@ -5,20 +5,42 @@
  */
 package edu.co.sena.acs.clases;
 
+import java.util.List;
+
 /**
  *
  * @author Sebestian
  */
 public class Cuenta {
+
+    private List<Propietario> propietarios;
+    private List<Registro> registros;
     private String tipoDocumento;
     private int numeroDocumento;
-    private String password;
+    private String primerNombre;
+    private String segundoNombre;
+    private String primerApellido;
+    private String segundoApellido;
+    private String cargo;
+    private byte[] foto;
 
     public Cuenta() {
     }
 
-    public Cuenta(String cc, int i, String string, Usuario u1) {
-        
+    public List<Propietario> getPropietarios() {
+        return propietarios;
+    }
+
+    public void setPropietarios(List<Propietario> propietarios) {
+        this.propietarios = propietarios;
+    }
+
+    public List<Registro> getRegistros() {
+        return registros;
+    }
+
+    public void setRegistros(List<Registro> registros) {
+        this.registros = registros;
     }
 
     public String getTipoDocumento() {
@@ -37,13 +59,52 @@ public class Cuenta {
         this.numeroDocumento = numeroDocumento;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPrimerNombre() {
+        return primerNombre;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPrimerNombre(String primerNombre) {
+        this.primerNombre = primerNombre;
     }
-    
-    
+
+    public String getSegundoNombre() {
+        return segundoNombre;
+    }
+
+    public void setSegundoNombre(String segundoNombre) {
+        this.segundoNombre = segundoNombre;
+    }
+
+    public String getPrimerApellido() {
+        return primerApellido;
+    }
+
+    public void setPrimerApellido(String primerApellido) {
+        this.primerApellido = primerApellido;
+    }
+
+    public String getSegundoApellido() {
+        return segundoApellido;
+    }
+
+    public void setSegundoApellido(String segundoApellido) {
+        this.segundoApellido = segundoApellido;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+
 }

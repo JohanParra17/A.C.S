@@ -13,108 +13,42 @@ import java.util.List;
  */
 public class Usuario {
 
-    private List<Propietario> propietarios;
-    private List<Registro> registros;
+    private String cuentaTipoDocumento;
+    private int cuentaNumeroDocumento;
+    private String password;
+    
     private Cuenta cuenta;
-    private String tipoDocumento;
-    private int numeroDocumento;
-    private String primerNombre;
-    private String segundoNombre;
-    private String primerApellido;
-    private String segundoApellido;
-    private String cargo;
-    private byte[] foto;
 
     public Usuario() {
     }
 
-    public List<Propietario> getPropietarios() {
-        return propietarios;
+    public String getCuentaTipoDocumento() {
+        return cuentaTipoDocumento;
     }
 
-    public void setPropietarios(List<Propietario> propietarios) {
-        this.propietarios = propietarios;
+    public void setCuentaTipoDocumento(String cuentaTipoDocumento) {
+        this.cuentaTipoDocumento = cuentaTipoDocumento;
     }
 
-    public List<Registro> getRegistros() {
-        return registros;
+    public int getCuentaNumeroDocumento() {
+        return cuentaNumeroDocumento;
     }
 
-    public void setRegistros(List<Registro> registros) {
-        this.registros = registros;
+    public void setCuentaNumeroDocumento(int cuentaNumeroDocumento) {
+        this.cuentaNumeroDocumento = cuentaNumeroDocumento;
     }
 
-    public Cuenta getCuenta() {
-        return cuenta;
+    public String getPassword() {
+        return password;
     }
 
-    public void setCuenta(Cuenta cuenta) {
-        this.cuenta = cuenta;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getTipoDocumento() {
-        return tipoDocumento;
-    }
+   
 
-    public void setTipoDocumento(String tipoDocumento) {
-        this.tipoDocumento = tipoDocumento;
-    }
-
-    public int getNumeroDocumento() {
-        return numeroDocumento;
-    }
-
-    public void setNumeroDocumento(int numeroDocumento) {
-        this.numeroDocumento = numeroDocumento;
-    }
-
-    public String getPrimerNombre() {
-        return primerNombre;
-    }
-
-    public void setPrimerNombre(String primerNombre) {
-        this.primerNombre = primerNombre;
-    }
-
-    public String getSegundoNombre() {
-        return segundoNombre;
-    }
-
-    public void setSegundoNombre(String segundoNombre) {
-        this.segundoNombre = segundoNombre;
-    }
-
-    public String getPrimerApellido() {
-        return primerApellido;
-    }
-
-    public void setPrimerApellido(String primerApellido) {
-        this.primerApellido = primerApellido;
-    }
-
-    public String getSegundoApellido() {
-        return segundoApellido;
-    }
-
-    public void setSegundoApellido(String segundoApellido) {
-        this.segundoApellido = segundoApellido;
-    }
-
-    public String getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }
-
-    public byte[] getFoto() {
-        return foto;
-    }
-
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
-    }
+   
 
     
     

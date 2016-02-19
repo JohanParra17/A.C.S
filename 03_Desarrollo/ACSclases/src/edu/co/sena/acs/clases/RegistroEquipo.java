@@ -12,8 +12,8 @@ package edu.co.sena.acs.clases;
 public class RegistroEquipo {
     private int registroIdRegistro;
     private String propietarioEquipoIdEquipo;
-    private String propietarioUsuarioTipoDocumento;
-    private int propietarioUsuarionumeroDocumento;
+    private String propietarioCuentaTipoDocumento;
+    private int propietarioCuentanumeroDocumento;
     private java.sql.Date fechaEntrada;
     private java.sql.Time horaEntrada;
     private java.sql.Date fechaSalida;
@@ -38,20 +38,20 @@ public class RegistroEquipo {
         this.propietarioEquipoIdEquipo = propietarioEquipoIdEquipo;
     }
 
-    public String getPropietarioUsuarioTipoDocumento() {
-        return propietarioUsuarioTipoDocumento;
+    public String getPropietarioCuentaTipoDocumento() {
+        return propietarioCuentaTipoDocumento;
     }
 
-    public void setPropietarioUsuarioTipoDocumento(String propietarioUsuarioTipoDocumento) {
-        this.propietarioUsuarioTipoDocumento = propietarioUsuarioTipoDocumento;
+    public void setPropietarioCuentaTipoDocumento(String propietarioCuentaTipoDocumento) {
+        this.propietarioCuentaTipoDocumento = propietarioCuentaTipoDocumento;
     }
 
-    public int getPropietarioUsuarionumeroDocumento() {
-        return propietarioUsuarionumeroDocumento;
+    public int getPropietarioCuentanumeroDocumento() {
+        return propietarioCuentanumeroDocumento;
     }
 
-    public void setPropietarioUsuarionumeroDocumento(int propietarioUsuarionumeroDocumento) {
-        this.propietarioUsuarionumeroDocumento = propietarioUsuarionumeroDocumento;
+    public void setPropietarioCuentanumeroDocumento(int propietarioCuentanumeroDocumento) {
+        this.propietarioCuentanumeroDocumento = propietarioCuentanumeroDocumento;
     }
 
     public java.sql.Date getFechaEntrada() {
@@ -85,6 +85,8 @@ public class RegistroEquipo {
     public void setHoraSalida(java.sql.Time horaSalida) {
         this.horaSalida = horaSalida;
     }
+
+    
     
     
 }

@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class Propietario {
     private String equipoIdEquipo;
-    private String usuarioTipoDocumento;
-    private int usuarioNumeroDocumento;
+    private String cuentaTipoDocumento;
+    private int cuentaNumeroDocumento;
     private Equipo equipo;
     private List<RegistroEquipo> registroequipo;
 
@@ -29,20 +29,20 @@ public class Propietario {
         this.equipoIdEquipo = equipoIdEquipo;
     }
 
-    public String getUsuarioTipoDocumento() {
-        return usuarioTipoDocumento;
+    public String getCuentaTipoDocumento() {
+        return cuentaTipoDocumento;
     }
 
-    public void setUsuarioTipoDocumento(String usuarioTipoDocumento) {
-        this.usuarioTipoDocumento = usuarioTipoDocumento;
+    public void setCuentaTipoDocumento(String cuentaTipoDocumento) {
+        this.cuentaTipoDocumento = cuentaTipoDocumento;
     }
 
-    public int getUsuarioNumeroDocumento() {
-        return usuarioNumeroDocumento;
+    public int getCuentaNumeroDocumento() {
+        return cuentaNumeroDocumento;
     }
 
-    public void setUsuarioNumeroDocumento(int usuarioNumeroDocumento) {
-        this.usuarioNumeroDocumento = usuarioNumeroDocumento;
+    public void setCuentaNumeroDocumento(int cuentaNumeroDocumento) {
+        this.cuentaNumeroDocumento = cuentaNumeroDocumento;
     }
 
     public Equipo getEquipo() {
@@ -60,6 +60,8 @@ public class Propietario {
     public void setRegistroequipo(List<RegistroEquipo> registroequipo) {
         this.registroequipo = registroequipo;
     }
+
+    
     
     
 }
